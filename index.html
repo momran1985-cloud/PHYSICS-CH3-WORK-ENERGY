@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>منصة اختبارات تحصيلي فيزياء — الزخم والطاقة والشغل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10264a; --ink2:#34476b; --paper:#f6f3e9; --card:#ffffff; --line:#dcd6c3;
+  --teal:#0e7c86; --teal-d:#0a5c64; --amber:#f59e0b; --ok:#15803d; --okbg:#e7f6ec; --bad:#b91c1c; --badbg:#fdeaea;
+  --r:16px; --shadow:0 6px 22px rgba(16,38,74,.10);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:'Tajawal','Segoe UI',Tahoma,Arial,sans-serif;color:var(--ink);background:var(--paper);
+  background-image:linear-gradient(rgba(14,124,134,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(14,124,134,.07) 1px,transparent 1px);
+  background-size:28px 28px;line-height:1.7;min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+bdi{unicode-bidi:isolate}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+.btn{border:0;border-radius:12px;padding:11px 20px;font-size:1rem;font-weight:700;background:var(--teal);color:#fff;transition:transform .12s,background .15s,box-shadow .15s;box-shadow:0 3px 0 var(--teal-d)}
+.btn:hover{background:#0b6e77}.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--teal-d)}
+.btn.sec{background:#fff;color:var(--ink);box-shadow:0 3px 0 var(--line);border:1.5px solid var(--line)}
+.btn.sec:hover{background:#fbf9f1}
+.btn.amber{background:var(--amber);color:#3b2600;box-shadow:0 3px 0 #b97800}
+.btn.red{background:var(--bad);box-shadow:0 3px 0 #7f1212}
+.btn.sm{padding:7px 14px;font-size:.9rem}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);border:1px solid var(--line)}
+.top{background:var(--ink);color:#fff;border-radius:0 0 22px 22px;padding:14px 16px;margin:0 -16px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.top .brand{display:flex;align-items:center;gap:10px;flex:1;min-width:220px}
+.top .brand b{font-size:1.1rem;font-weight:800}
+.top .brand small{display:block;opacity:.75;font-size:.8rem;font-weight:400}
+.chip{background:rgba(255,255,255,.14);padding:5px 12px;border-radius:99px;font-size:.88rem}
+h1,h2,h3{margin:0 0 8px;line-height:1.35}
+/* login */
+.login{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;align-items:center;min-height:calc(100vh - 32px)}
+.hero{padding:10px 6px}
+.hero .tag{display:inline-block;background:var(--ink);color:#fff;border-radius:99px;padding:4px 14px;font-size:.85rem;margin-bottom:12px}
+.hero h1{font-size:2.1rem;font-weight:800}
+.hero h1 span{color:var(--teal)}
+.hero p{color:var(--ink2);font-size:1.02rem;max-width:520px}
+.hero svg{width:100%;max-width:470px;margin-top:8px}
+.hero .trace{stroke-dasharray:640;stroke-dashoffset:640;animation:draw 3.2s .3s ease forwards}
+.hero .dot{offset-path:path('M20 150 C 90 150, 120 140, 170 100 S 260 20, 330 20');animation:go 3.2s .3s ease forwards;offset-distance:0%}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes go{to{offset-distance:100%}}
+.form{padding:26px}
+.form h2{font-size:1.4rem}
+label{display:block;font-weight:700;margin:14px 0 5px}
+input[type=text],input[type=tel]{width:100%;font:inherit;padding:12px 14px;border:1.8px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+input:focus{outline:3px solid rgba(14,124,134,.25);border-color:var(--teal)}
+.hint{font-size:.85rem;color:var(--ink2)}
+.err{color:var(--bad);font-weight:700;margin-top:10px;min-height:1.4em}
+/* home */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{padding:12px 14px;text-align:center}
+.stat b{display:block;font-size:1.6rem;font-weight:800;color:var(--teal)}
+.stat span{font-size:.85rem;color:var(--ink2)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.scard{padding:16px 18px;position:relative;overflow:hidden;border-top:6px solid var(--c)}
+.scard .num{position:absolute;left:12px;top:4px;font-size:3.6rem;font-weight:800;color:var(--c);opacity:.13;line-height:1}
+.scard h3{font-size:1.08rem;padding-left:44px}
+.scard .meta{color:var(--ink2);font-size:.88rem;margin-bottom:10px}
+.scard .row{display:flex;gap:8px;flex-wrap:wrap}
+.scard .best{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px}
+.pill{font-size:.78rem;padding:2px 10px;border-radius:99px;background:#eef3f4;color:var(--ink2);border:1px solid var(--line)}
+.pill.good{background:var(--okbg);color:var(--ok);border-color:#b7e1c4}
+.final{margin-top:14px;padding:20px;background:linear-gradient(135deg,var(--ink),#1c3d78);color:#fff;border:0;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.final h3{font-size:1.3rem;margin:0}.final p{margin:2px 0 0;opacity:.85}
+.final .grow{flex:1;min-width:220px}
+.foot{margin:22px 0 8px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.credit{text-align:center;color:var(--ink2);font-size:.88rem;margin:10px 0 24px}
+.credit a{color:var(--teal);font-weight:700;text-decoration:none}
+/* quiz */
+.qbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.qbar .t{font-weight:800;flex:1;min-width:180px}
+.timer{font-variant-numeric:tabular-nums;direction:ltr;background:var(--ink);color:#fff;padding:3px 12px;border-radius:99px;font-weight:700}
+.timer.low{background:var(--bad);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.6}}
+.prog{height:9px;background:#e4dfcc;border-radius:99px;overflow:hidden;margin-bottom:14px}
+.prog i{display:block;height:100%;background:var(--c,var(--teal));border-radius:99px;transition:width .35s}
+.qcard{padding:20px}
+.qcard.in{animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.qn{display:inline-block;background:var(--c,var(--teal));color:#fff;border-radius:8px;padding:0 10px;font-weight:800;margin-bottom:8px;font-size:.9rem}
+.qt{font-size:1.2rem;font-weight:700;margin-bottom:12px}
+.fig{background:#fffdf6;border:1px dashed var(--line);border-radius:12px;padding:8px;margin:6px 0 14px;max-width:440px}
+.fig svg{width:100%;height:auto;direction:ltr;display:block}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:right;width:100%;background:#fff;border:2px solid var(--line);border-radius:14px;padding:11px 14px;font-size:1.05rem;color:var(--ink);transition:border-color .12s,background .12s,transform .1s}
+.opt:hover{border-color:var(--teal);background:#f3fafb}
+.opt .l{flex:none;width:34px;height:34px;border-radius:50%;background:#eef3f4;display:grid;place-items:center;font-weight:800}
+.opt.sel{border-color:var(--teal);background:#e6f5f6}.opt.sel .l{background:var(--teal);color:#fff}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.ok .l{background:var(--ok);color:#fff}
+.opt.no{border-color:var(--bad);background:var(--badbg)}.opt.no .l{background:var(--bad);color:#fff}
+.opt.lock{pointer-events:none}
+.fb{margin-top:14px;border-radius:14px;padding:13px 16px;animation:in .3s}
+.fb.ok{background:var(--okbg);border:1.5px solid #9ed3ae}.fb.no{background:var(--badbg);border:1.5px solid #eeb0b0}
+.fb b.h{display:block;font-size:1.05rem;margin-bottom:2px}
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.dots button{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-weight:700;color:var(--ink)}
+.dots button.done{background:#d9eef0;border-color:var(--teal)}
+.dots button.cur{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* result */
+.res{padding:24px;text-align:center}
+.ring{width:170px;height:170px;margin:4px auto 6px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .c{position:absolute;inset:0;display:grid;place-items:center;font-size:2.2rem;font-weight:800}
+.ring .c small{display:block;font-size:.85rem;font-weight:500;color:var(--ink2);margin-top:-8px}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.kv div{background:#f4f1e6;border-radius:12px;padding:8px}.kv b{display:block;font-size:1.25rem}.kv span{font-size:.82rem;color:var(--ink2)}
+.msg{font-size:1.15rem;font-weight:700;margin:8px 0}
+.medal{display:inline-flex;align-items:center;gap:8px;background:#fff6dd;border:1.5px solid #f0cf72;color:#7a5200;padding:6px 16px;border-radius:99px;font-weight:800;margin:6px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.rv{margin-top:18px;text-align:right}
+.rvi{padding:14px 16px;margin-bottom:10px;border-right:6px solid var(--line)}
+.rvi.ok{border-right-color:var(--ok)}.rvi.no{border-right-color:var(--bad)}
+.rvi .q{font-weight:700;margin-bottom:6px}
+.rvi .ans{font-size:.95rem}
+.rvi .ex{margin-top:6px;color:var(--ink2);font-size:.95rem}
+.tag2{display:inline-block;font-size:.78rem;padding:1px 9px;border-radius:99px;margin-left:6px;font-weight:700}
+.tag2.ok{background:var(--okbg);color:var(--ok)}.tag2.no{background:var(--badbg);color:var(--bad)}.tag2.sk{background:#eee;color:#555}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(10,24,48,.55);display:grid;place-items:center;padding:16px;z-index:50}
+.modal{background:#fff;border-radius:18px;padding:22px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:in .25s}
+.modal h3{font-size:1.25rem}
+.modal ul{padding-right:20px;margin:8px 0}
+.chk{display:flex;gap:8px;align-items:center;font-weight:500;margin:12px 0}
+.chk input{width:20px;height:20px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:99px;z-index:90;font-weight:700;animation:in .25s}
+/* certificate */
+#cert{display:none}
+#cert.show{display:block;position:fixed;inset:0;z-index:80;background:rgba(10,24,48,.7);overflow:auto;padding:16px}
+.certbox{max-width:900px;margin:0 auto}
+.certbar{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+.cpage{background:#fffdf5;border:14px double #b8892b;padding:34px 40px;text-align:center;color:#2a2210;position:relative;min-height:520px;display:flex;flex-direction:column;justify-content:center}
+.cpage h1{font-size:2.6rem;color:#8a5f00;margin:0 0 6px;font-weight:800}
+.cpage .nm{font-size:2.1rem;font-weight:800;border-bottom:2px solid #b8892b;display:inline-block;padding:0 26px;margin:8px auto 14px;color:var(--ink)}
+.cpage p{font-size:1.15rem;margin:6px 0}
+.cpage .sig{display:flex;justify-content:space-around;margin-top:26px;font-size:1rem}
+.cpage .sig div{min-width:200px;border-top:1.5px solid #8a7a50;padding-top:6px}
+@media print{
+  body{background:#fff!important}
+  body>*:not(#cert){display:none!important}
+  #cert.show{position:static;background:none;padding:0;overflow:visible}
+  .certbar{display:none}
+  .cpage{min-height:0;height:182mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4 landscape;margin:10mm}
+}
+@media(max-width:720px){
+  .login{grid-template-columns:1fr;min-height:0;padding-top:10px}
+  .hero h1{font-size:1.6rem}
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .qt{font-size:1.08rem}
+  .kv{grid-template-columns:repeat(3,1fr)}
+  .cpage{padding:20px 14px}.cpage h1{font-size:1.8rem}.cpage .nm{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div id="cert"></div>
+<script>
+const Q=(q,c,w,e,g)=>({q,o:[c,...w],e,g});
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const P=a=>a[R(0,a.length-1)];
+const f=x=>String(+(+x).toFixed(2));
+const GQ=(q,c,cands,e,u)=>{const sfx=u?' '+u:'';const seen=new Set([f(c)]),w=[];
+  for(const x of cands){const s=f(x);if(isFinite(x)&&x>0&&!seen.has(s)){seen.add(s);w.push(s)}}
+  for(let k=2;w.length<3&&k<60;k++){const s=f((c||1)*k+k);if(!seen.has(s)){seen.add(s);w.push(s)}}
+  return Q(q,f(c)+sfx,w.slice(0,3).map(s=>s+sfx),e)};
+const SQ=(q,c,cands,e)=>{const w=[...new Set([...cands,'لا يمكن تحديد ذلك'])].filter(x=>x!==c).slice(0,3);return Q(q,c,w,e)};
+
+const TP={
+/* ===== 1 الزخم ===== */
+s1:[
+()=>{const m=R(2,20),v=R(2,30);return GQ(`جسم كتلته ${m} kg يتحرك بسرعة ${v} m/s. زخمه`,m*v,[m+v,m*v*v,v/m],`p = mv = ${m} × ${v} = ${m*v} kg·m/s.`,'kg·m/s')},
+()=>{const m=R(2,20),v=R(2,30);return GQ(`زخم جسم ${m*v} kg·m/s وكتلته ${m} kg. سرعته`,v,[m*v*m,m+v,m*v+m],`v = p ÷ m = ${m*v} ÷ ${m} = ${v} m/s.`,'m/s')},
+()=>{const m=R(2,20),v=R(2,30);return GQ(`زخم جسم ${m*v} kg·m/s وسرعته ${v} m/s. كتلته`,m,[m*v*v,m+v,v],`m = p ÷ v = ${m*v} ÷ ${v} = ${m} kg.`,'kg')},
+()=>{const k=P([2,3,4]),p0=R(3,12);return GQ(`زخم جسم ${p0} kg·m/s. إذا زادت سرعته إلى ${k} أمثالها مع ثبات كتلته فإن زخمه يصبح`,p0*k,[p0*k*k,p0/k,p0+k],`الزخم يتناسب طردياً مع السرعة: ${p0} × ${k} = ${p0*k} kg·m/s.`,'kg·m/s')},
+()=>{const a=P([2,3]),b=P([2,3,4]),p0=R(2,9);return GQ(`زخم جسم ${p0} kg·m/s. إذا تضاعفت كتلته ${a} مرات وزادت سرعته إلى ${b} أمثالها فإن زخمه يصبح`,p0*a*b,[p0*(a+b),p0*a,p0*b*b],`p ∝ m وp ∝ v: ${p0} × ${a} × ${b} = ${p0*a*b} kg·m/s.`,'kg·m/s')},
+()=>{const m=R(2,10),v1=R(1,10),v2=v1+R(2,10);return GQ(`جسم كتلته ${m} kg تغيرت سرعته من ${v1} m/s إلى ${v2} m/s في الاتجاه نفسه. التغير في زخمه`,m*(v2-v1),[m*(v1+v2),m*v2,v2-v1],`Δp = m(v₂ − v₁) = ${m} × ${v2-v1} = ${m*(v2-v1)} kg·m/s.`,'kg·m/s')},
+()=>{const m=R(1,5)*0.1,v=R(5,30);return GQ(`ترتد كرة كتلتها ${f(m)} kg عن حائط بالسرعة نفسها ${v} m/s. مقدار التغير في زخمها`,2*m*v,[m*v,0,m*v*v],`Δp = m v − (−m v) = 2mv = 2 × ${f(m)} × ${v} = ${f(2*m*v)} kg·m/s.`,'kg·m/s')},
+()=>{const m1=R(2,9)*10,v1=R(2,9),m2=R(2,9)*10,v2=R(2,9);const a=m1*v1,b=m2*v2;return SQ(`جسم (A) كتلته ${m1} kg وسرعته ${v1} m/s، وجسم (B) كتلته ${m2} kg وسرعته ${v2} m/s. أيهما زخمه أكبر؟`,a>b?'الجسم A':a<b?'الجسم B':'متساويان',['الجسم A','الجسم B','متساويان'],`pA = ${a} و pB = ${b} kg·m/s.`)},
+()=>{const g=R(2,10)*100,v=R(5,30);return GQ(`كرة كتلتها ${g} g تتحرك بسرعة ${v} m/s. زخمها`,g/1000*v,[g*v,g/1000+v,v/g*1000],`m = ${g/1000} kg، p = mv = ${f(g/1000*v)} kg·m/s.`,'kg·m/s')},
+()=>{const m1=R(2,6),v1=R(4,10),m2=R(1,m1-1),v2=R(2,9);return GQ(`جسمان يتحركان في اتجاهين متعاكسين: ${m1} kg بسرعة ${v1} m/s و ${m2} kg بسرعة ${v2} m/s. مقدار الزخم الكلي`,Math.abs(m1*v1-m2*v2),[m1*v1+m2*v2,m1*v1,m2*v2],`الزخم الكلي = |${m1*v1} − ${m2*v2}| = ${Math.abs(m1*v1-m2*v2)} kg·m/s.`,'kg·m/s')}
+],
+/* ===== 2 الدفع ===== */
+s2:[
+()=>{const F=R(5,60),t=R(2,10);return GQ(`قوة ${F} N تؤثر في جسم مدة ${t} s. الدفع`,F*t,[F+t,F/t,F*t*t],`J = FΔt = ${F} × ${t} = ${F*t} N·s.`,'N·s')},
+()=>{const F=R(5,60),t=R(2,10);return GQ(`دفع مقداره ${F*t} N·s خلال ${t} s. متوسط القوة المؤثرة`,F,[F*t*t,F+t,F*t+t],`F = J ÷ Δt = ${F*t} ÷ ${t} = ${F} N.`,'N')},
+()=>{const F=R(5,60),t=R(2,10);return GQ(`دفع مقداره ${F*t} N·s أحدثته قوة ${F} N. زمن التأثير`,t,[F*t*F,F+t,F],`Δt = J ÷ F = ${F*t} ÷ ${F} = ${t} s.`,'s')},
+()=>{const m=R(2,10),v1=R(1,8),v2=v1+R(2,10);return GQ(`تغيرت سرعة جسم كتلته ${m} kg من ${v1} m/s إلى ${v2} m/s. الدفع المؤثر فيه`,m*(v2-v1),[m*(v1+v2),m*v2,v2-v1],`J = Δp = m(v₂ − v₁) = ${m} × ${v2-v1} = ${m*(v2-v1)} N·s.`,'N·s')},
+()=>{const m=R(2,10)*100,v=R(10,30),t=R(2,5);return GQ(`سيارة كتلتها ${m} kg تسير بسرعة ${v} m/s تتوقف خلال ${t} s. متوسط قوة الفرملة`,m*v/t,[m*v,m*v*t,m*t/v],`F = Δp ÷ Δt = ${m} × ${v} ÷ ${t} = ${f(m*v/t)} N.`,'N')},
+()=>{const k=P([2,4,5]),F0=R(2,8)*k;return GQ(`يؤثر دفع معين بقوة ${F0*k} N. إذا زاد زمن التأثير ${k} أمثال مع بقاء الدفع نفسه فإن القوة المتوسطة تصبح`,F0,[F0*k*k,F0*k,F0+k],`J = FΔt ثابت، فعند زيادة الزمن ${k} أمثال تقل القوة إلى ${F0*k} ÷ ${k} = ${F0} N.`,'N')},
+()=>{const m=R(1,5)*0.1,v1=R(10,30),v2=R(10,30);return GQ(`كرة كتلتها ${f(m)} kg تصل إلى مضرب بسرعة ${v1} m/s وتغادره في الاتجاه المعاكس بسرعة ${v2} m/s. مقدار الدفع`,m*(v1+v2),[m*Math.abs(v1-v2)+m,m*v1,m*v2],`J = m(v₁ + v₂) = ${f(m)} × ${v1+v2} = ${f(m*(v1+v2))} N·s (لأن الاتجاهين متعاكسان).`,'N·s')},
+()=>{const F=R(2,10)*10,t=R(2,6),m=R(2,10)*5;return GQ(`قوة ${F} N تؤثر مدة ${t} s في جسم كتلته ${m} kg. مقدار التغير في سرعته`,F*t/m,[F*t*m,F/m,F*t],`Δv = FΔt ÷ m = ${F*t} ÷ ${m} = ${f(F*t/m)} m/s.`,'m/s')},
+()=>{const m=R(2,10)*5,F=R(2,10)*10,t=R(2,6);return GQ(`جسم كتلته ${m} kg ساكن تؤثر فيه قوة ${F} N مدة ${t} s. سرعته النهائية`,F*t/m,[F*t*m,F/m,F*t],`v = FΔt ÷ m = ${F*t} ÷ ${m} = ${f(F*t/m)} m/s.`,'m/s')},
+()=>{const m=R(2,8)*5,v=R(4,12),t=R(2,5);return GQ(`لاعب كتلته ${m} kg يتحرك بسرعة ${v} m/s ويتوقف خلال ${t} s. متوسط القوة المؤثرة فيه`,m*v/t,[m*v,m*v*t,m*t/v],`F = Δp ÷ Δt = ${m*v} ÷ ${t} = ${f(m*v/t)} N.`,'N')}
+],
+/* ===== 3 حفظ الزخم ===== */
+s3:[
+()=>{const m1=R(1,5),m2=R(1,5),k=R(1,5);return GQ(`جسم كتلته ${m1} kg يتحرك بسرعة ${(m1+m2)*k} m/s ويصطدم بجسم ساكن كتلته ${m2} kg ويلتحمان. سرعتهما بعد التصادم`,m1*k,[(m1+m2)*k,m2*k,m1*k*2],`m₁v₁ = (m₁ + m₂)v ⇒ v = ${m1*(m1+m2)*k} ÷ ${m1+m2} = ${m1*k} m/s.`,'m/s')},
+()=>{const m1=R(1,5),m2=R(1,5),vf=R(8,15);const v1=vf+m2,v2=vf-m1;return GQ(`جسمان في الاتجاه نفسه: ${m1} kg بسرعة ${v1} m/s و ${m2} kg بسرعة ${v2} m/s. يلتحمان بعد التصادم. سرعتهما المشتركة`,vf,[(v1+v2)/2,v1+v2,vf+1],`v = (m₁v₁ + m₂v₂) ÷ (m₁ + m₂) = ${m1*v1+m2*v2} ÷ ${m1+m2} = ${vf} m/s.`,'m/s')},
+()=>{let m1,m2,vf,v2,v1;do{m1=R(2,6);m2=R(2,6);vf=R(1,4);v2=R(2,6);v1=((m1+m2)*vf+m2*v2)/m1}while(v1%1!==0||v1<=0);return GQ(`جسم كتلته ${m1} kg يتحرك شرقاً بسرعة ${v1} m/s ويصطدم رأسياً بجسم كتلته ${m2} kg يتحرك غرباً بسرعة ${v2} m/s ويلتحمان. مقدار سرعتهما بعد التصادم`,vf,[v1+v2,Math.abs(v1-v2),(v1+v2)/2],`(${m1}×${v1}) − (${m2}×${v2}) = ${m1*v1-m2*v2} = ${m1+m2}v ⇒ v = ${vf} m/s باتجاه الشرق.`,'m/s')},
+()=>{const m2=R(1,5),m1=m2*R(20,60),v1=R(1,5),v2=m1*v1/m2;return GQ(`مدفع كتلته ${m1} kg يطلق قذيفة كتلتها ${m2} kg بسرعة ${v2} m/s. سرعة ارتداد المدفع`,v1,[v2,m1*v1,v1+m2],`الزخم الكلي صفر: m₁v₁ = m₂v₂ ⇒ v₁ = ${m2*v2} ÷ ${m1} = ${v1} m/s.`,'m/s')},
+()=>{const v=R(2,12);return GQ(`كرة بلياردو تتحرك بسرعة ${v} m/s تصطدم تصادماً مرناً مباشراً بكرة مماثلة ساكنة. سرعة الكرة الثانية بعد التصادم`,v,[v/2,2*v,0],`عند التصادم المرن المباشر بين كتلتين متساويتين تتبادلان السرعتين، فتتحرك الثانية بسرعة ${v} m/s.`,'m/s')},
+()=>{const m1=R(1,4),m2=R(1,6),v1=R(2,9)*2/ m1;const M1=R(2,8),M2=R(2,8),u1=R(2,10);return GQ(`جسمان ساكنان كتلتاهما ${M1} kg و ${M2} kg ينفصلان بعد انفجار نابض بينهما. إذا تحرك الأول بسرعة ${u1} m/s فإن زخم الثاني بعد الانفصال`,M1*u1,[M2*u1,M1+u1,M1*u1*2],`الزخم الكلي صفر فزخم الثاني يساوي زخم الأول مقداراً ويعاكسه اتجاهاً: ${M1} × ${u1} = ${M1*u1} kg·m/s.`,'kg·m/s')},
+()=>{const m1=R(2,6),v1=R(3,10),m2=R(2,6),v2=R(1,5);return GQ(`جسمان: ${m1} kg بسرعة ${v1} m/s و ${m2} kg بسرعة ${v2} m/s في الاتجاه نفسه. مقدار الزخم الكلي قبل التصادم`,m1*v1+m2*v2,[m1*v1-m2*v2>0?m1*v1-m2*v2:m1*v1,(m1+m2)*(v1+v2),m1*v1],`p = ${m1}×${v1} + ${m2}×${v2} = ${m1*v1+m2*v2} kg·m/s ويبقى ثابتاً بعد التصادم.`,'kg·m/s')},
+()=>{const m=R(1,3),u=R(2,6),k=R(2,8)*2-u;if(k<=0)return TP.s3[7]();const v1=k,v2=(m*(v1+u))/(2*m);return GQ(`كرة كتلتها ${m} kg تتحرك بسرعة ${v1} m/s تصطدم بكرة ساكنة كتلتها ${2*m} kg وترتد بسرعة ${u} m/s. سرعة الكرة الساكنة بعد التصادم`,v2,[v1+u,v1-u,v1],`m v₁ = −m u + 2m v₂ ⇒ v₂ = (v₁ + u) ÷ 2 = ${f(v2)} m/s.`,'m/s')},
+()=>{const v=R(2,10)*2;return GQ(`كرة كتلتها m تتحرك بسرعة ${v} m/s تصطدم بكرة مماثلة ساكنة وتلتحمان. سرعتهما المشتركة`,v/2,[v,2*v,v/4],`mv = 2m·V ⇒ V = v ÷ 2 = ${v/2} m/s.`,'m/s')},
+()=>{const m1=R(40,70),m2=R(40,70),v1=R(2,6);return GQ(`متزلجان على الجليد كتلتاهما ${m1} kg و ${m2} kg يدفع أحدهما الآخر وهما ساكنان. إذا ابتعد الأول بسرعة ${v1} m/s فإن زخم الثاني (مقداراً)`,m1*v1,[m2*v1,m1+m2,m1*v1*2],`الزخم الكلي صفر فمقدار زخم الثاني = ${m1} × ${v1} = ${m1*v1} kg·m/s.`,'kg·m/s')}
+],
+/* ===== 4 الشغل ===== */
+s4:[
+()=>{const F=R(5,40),d=R(2,12);return GQ(`قوة ${F} N تحرك جسماً مسافة ${d} m في اتجاهها. الشغل المبذول`,F*d,[F+d,F/d,F*d*d],`W = Fd = ${F} × ${d} = ${F*d} J.`,'J')},
+()=>{const F=2*R(3,20),d=R(2,12);return GQ(`قوة ${F} N تصنع زاوية 60° مع الإزاحة ${d} m. الشغل المبذول`,F*d/2,[F*d,F*d*0.866,F*d*2],`W = Fd cos60° = ${F} × ${d} × 0.5 = ${F*d/2} J.`,'J')},
+()=>{const m=R(2,20),h=R(2,12);return GQ(`يرفع عامل صندوقاً كتلته ${m} kg إلى ارتفاع ${h} m (g = 10 m/s²). الشغل المبذول`,m*10*h,[m*h,m*10,m*h*h],`W = mgh = ${m} × 10 × ${h} = ${m*10*h} J.`,'J')},
+()=>{const m=R(10,60),mu=P([0.1,0.2,0.25,0.3]),d=R(5,20);return GQ(`صندوق كتلته ${m} kg يُسحب مسافة ${d} m على سطح أفقي معامل احتكاكه الحركي ${mu} (g = 10 m/s²). مقدار الشغل الذي تبذله قوة الاحتكاك`,mu*m*10*d,[m*10*d,mu*m*d,mu*d],`f = μmg = ${f(mu*m*10)} N، W = fd = ${f(mu*m*10*d)} J (سالب لأن الاحتكاك يعاكس الإزاحة).`,'J')},
+()=>{const F=R(5,30),d=R(2,10);return GQ(`بُذل شغل ${F*d} J لتحريك جسم مسافة ${d} m بقوة في اتجاه الإزاحة. مقدار القوة`,F,[F*d*d,F+d,F*d+d],`F = W ÷ d = ${F*d} ÷ ${d} = ${F} N.`,'N')},
+()=>{const F=R(5,30),d=R(2,10);return GQ(`بذلت قوة ${F} N شغلاً مقداره ${F*d} J في اتجاه الإزاحة. المسافة التي تحركها الجسم`,d,[F*d*F,F+d,F],`d = W ÷ F = ${F*d} ÷ ${F} = ${d} m.`,'m')},
+()=>{const F=R(15,40),fr=R(3,12),d=R(3,10);return GQ(`يُسحب صندوق مسافة ${d} m بقوة ${F} N في اتجاه الحركة ويعاكسها احتكاك ${fr} N. الشغل المحصل`,(F-fr)*d,[(F+fr)*d,F*d,fr*d],`W = (F − f)d = (${F} − ${fr}) × ${d} = ${(F-fr)*d} J.`,'J')},
+()=>{const F=R(2,8)*5,d=R(2,8)*2;return GQ(`تزداد القوة المؤثرة في جسم بانتظام من صفر إلى ${F} N خلال إزاحة ${d} m. الشغل المبذول (المساحة تحت منحنى القوة – الإزاحة)`,F*d/2,[F*d,F*d*2,F+d],`المساحة مثلث: ½ × ${F} × ${d} = ${F*d/2} J.`,'J')},
+()=>{const m=R(2,10)*5,L=R(2,10)*2;return GQ(`يرفع شخص جسماً كتلته ${m} kg على مستوى مائل أملس طوله ${L} m بزاوية 30° مع الأفقي (g = 10 m/s²). الشغل المبذول`,m*10*L/2,[m*10*L,m*L,m*10*L*0.866],`الارتفاع h = L sin30° = ${L/2} m، W = mgh = ${m*10*L/2} J.`,'J')},
+()=>{const F=R(10,50),d=R(2,10);return GQ(`حُمل صندوق وزنه ${F} N أفقياً مسافة ${d} m بسرعة ثابتة. الشغل الذي يبذله وزن الصندوق`,0,[F*d,F*d/2,F+d],`الوزن عمودي على الإزاحة الأفقية (θ = 90°) فشغله = صفر.`,'J')}
+],
+/* ===== 5 الطاقة الحركية ===== */
+s5:[
+()=>{const m=2*R(1,10),v=R(2,12);return GQ(`جسم كتلته ${m} kg يتحرك بسرعة ${v} m/s. طاقته الحركية`,m*v*v/2,[m*v,m*v*v,m*v/2],`KE = ½mv² = ½ × ${m} × ${v}² = ${m*v*v/2} J.`,'J')},
+()=>{const m=R(2,10),v=R(2,12);return GQ(`جسم يتحرك بسرعة ${v} m/s وطاقته الحركية ${m*v*v/2} J. كتلته`,m,[m*v*v,v,m*v],`m = 2KE ÷ v² = ${m*v*v} ÷ ${v*v} = ${m} kg.`,'kg')},
+()=>{const m=R(2,10),v=R(2,12);return GQ(`جسم كتلته ${m} kg وطاقته الحركية ${m*v*v/2} J. سرعته`,v,[v*v,m*v*v,m*v],`v = √(2KE ÷ m) = √${v*v} = ${v} m/s.`,'m/s')},
+()=>{const k=P([2,3,4]),E=R(2,10);return GQ(`طاقة جسم الحركية ${E} J. إذا زادت سرعته إلى ${k} أمثالها فإن طاقته الحركية تصبح`,E*k*k,[E*k,E*k*k*k,E/k],`KE ∝ v²: ${E} × ${k}² = ${E*k*k} J.`,'J')},
+()=>{const k=P([2,3,4]),E=R(2,10);return GQ(`طاقة جسم الحركية ${E} J. إذا زادت كتلته إلى ${k} أمثالها مع ثبات سرعته فإن طاقته الحركية تصبح`,E*k,[E*k*k,E/k,E+k],`KE ∝ m: ${E} × ${k} = ${E*k} J.`,'J')},
+()=>{const m=2*R(1,5),v1=R(1,6),v2=v1+R(2,6);return GQ(`زادت سرعة جسم كتلته ${m} kg من ${v1} m/s إلى ${v2} m/s. الشغل المبذول عليه`,m*(v2*v2-v1*v1)/2,[m*(v2-v1)*(v2-v1)/2,m*v2*v2/2,m*(v2-v1)],`W = ΔKE = ½m(v₂² − v₁²) = ½ × ${m} × (${v2*v2} − ${v1*v1}) = ${m*(v2*v2-v1*v1)/2} J.`,'J')},
+()=>{const m=R(2,10)*100,v=P([10,20]),d=P([20,40,50]);return GQ(`سيارة كتلتها ${m} kg تسير بسرعة ${v} m/s تتوقف بعد مسافة ${d} m. متوسط قوة الفرملة`,m*v*v/2/d,[m*v*v/d,m*v/d,m*v*v*d],`W = ΔKE ⇒ Fd = ½mv² ⇒ F = ${m*v*v/2} ÷ ${d} = ${f(m*v*v/2/d)} N.`,'N')},
+()=>{const d=R(5,25);return GQ(`سيارة تسير بسرعة معينة تتوقف على مسافة ${d} m عند الفرملة بقوة ثابتة. إذا تضاعفت سرعتها فإن مسافة توقفها بالقوة نفسها تصبح`,4*d,[2*d,8*d,d],`d ∝ v² فتصبح 4 × ${d} = ${4*d} m.`,'m')},
+()=>{const m=R(2,10)*2,v=R(2,10);return GQ(`جسم كتلته ${m} kg ينطلق من السكون حتى تصل سرعته ${v} m/s. الشغل المبذول عليه`,m*v*v/2,[m*v,m*v*v,m*v/2],`W = ΔKE = ½ × ${m} × ${v}² = ${m*v*v/2} J.`,'J')},
+()=>{const m1=R(2,6)*2,v1=R(2,6),m2=R(2,6)*2,v2=R(2,6);const a=m1*v1*v1,b=m2*v2*v2;return SQ(`جسم (A) كتلته ${m1} kg وسرعته ${v1} m/s، وجسم (B) كتلته ${m2} kg وسرعته ${v2} m/s. أيهما طاقته الحركية أكبر؟`,a>b?'الجسم A':a<b?'الجسم B':'متساويتان',['الجسم A','الجسم B','متساويتان'],`KE_A = ${a/2} J و KE_B = ${b/2} J.`)}
+],
+/* ===== 6 طاقة وضع الجاذبية ===== */
+s6:[
+()=>{const m=R(2,20),h=R(2,15);return GQ(`جسم كتلته ${m} kg على ارتفاع ${h} m عن سطح الأرض (g = 10 m/s²). طاقة وضعه`,m*10*h,[m*h,m*10,m*h*h],`PE = mgh = ${m} × 10 × ${h} = ${m*10*h} J.`,'J')},
+()=>{const m=R(2,20),h=R(2,15);return GQ(`طاقة وضع جسم ${m*10*h} J على ارتفاع ${h} m (g = 10 m/s²). كتلته`,m,[m*h,m*10,m*10*h*h],`m = PE ÷ (gh) = ${m*10*h} ÷ ${10*h} = ${m} kg.`,'kg')},
+()=>{const m=R(2,20),h=R(2,15);return GQ(`جسم كتلته ${m} kg وطاقة وضعه ${m*10*h} J (g = 10 m/s²). ارتفاعه`,h,[m*10*h/10,m*h,m+h],`h = PE ÷ (mg) = ${m*10*h} ÷ ${10*m} = ${h} m.`,'m')},
+()=>{const m=R(2,10),h1=R(2,8),h2=h1+R(2,10);return GQ(`رُفع جسم كتلته ${m} kg من ارتفاع ${h1} m إلى ${h2} m (g = 10 m/s²). التغير في طاقة وضعه`,m*10*(h2-h1),[m*10*(h2+h1),m*10*h2,m*(h2-h1)],`ΔPE = mg(h₂ − h₁) = ${m} × 10 × ${h2-h1} = ${m*10*(h2-h1)} J.`,'J')},
+()=>{const m=R(2,10)*5,h=R(2,10);return GQ(`رافعة ترفع حمولة كتلتها ${m} kg إلى ارتفاع ${h} m (g = 10 m/s²). الشغل المبذول بالقدر الذي تكتسبه من طاقة وضع`,m*10*h,[m*h,m*10,m*10*h/2],`W = ΔPE = mgh = ${m*10*h} J.`,'J')},
+()=>{const m1=R(2,6),h1=R(2,6),m2=R(2,6),h2=R(2,6);const a=m1*h1,b=m2*h2;return SQ(`جسم (A) كتلته ${m1} kg على ارتفاع ${h1} m، وجسم (B) كتلته ${m2} kg على ارتفاع ${h2} m. أيهما طاقة وضعه أكبر؟`,a>b?'الجسم A':a<b?'الجسم B':'متساويتان',['الجسم A','الجسم B','متساويتان'],`PE_A ∝ ${a} و PE_B ∝ ${b}.`)},
+()=>{const k=P([2,3,4]),E=R(2,10)*10;return GQ(`طاقة وضع جسم ${E} J. إذا زاد ارتفاعه إلى ${k} أمثاله فإن طاقة وضعه تصبح`,E*k,[E*k*k,E/k,E+k],`PE ∝ h: ${E} × ${k} = ${E*k} J.`,'J')},
+()=>{const m=R(2,10)*5,L=R(2,10)*2;return GQ(`جسم كتلته ${m} kg على مستوى مائل بزاوية 30° ويبعد ${L} m عن أسفله على امتداد المستوى (g = 10 m/s²). طاقة وضعه بالنسبة لأسفل المستوى`,m*10*L/2,[m*10*L,m*L,m*10*L*0.866],`h = L sin30° = ${L/2} m، PE = mgh = ${m*10*L/2} J.`,'J')},
+()=>{const m=R(2,10)*5,h=R(2,10);return GQ(`جسم كتلته ${m} kg على ارتفاع ${h} m على سطح القمر حيث g = 1.6 m/s². طاقة وضعه`,m*1.6*h,[m*10*h,m*h,m*1.6],`PE = mgh = ${m} × 1.6 × ${h} = ${f(m*1.6*h)} J.`,'J')},
+()=>{const m=R(2,10),h=R(5,20),h0=R(1,4);return GQ(`جسم كتلته ${m} kg على ارتفاع ${h} m عن الأرض، اعتُبر سطح طاولة ارتفاعها ${h0} m مستوى الصفر (g = 10 m/s²). طاقة وضعه بالنسبة للطاولة`,m*10*(h-h0),[m*10*h,m*10*(h+h0),m*10*h0],`PE = mg(h − h₀) = ${m} × 10 × ${h-h0} = ${m*10*(h-h0)} J.`,'J')}
+],
+/* ===== 7 حفظ الطاقة الميكانيكية ===== */
+s7:[
+()=>{const h=P([5,20,45,80,125]);const v=Math.sqrt(20*h);return GQ(`يسقط جسم من السكون من ارتفاع ${h} m (g = 10 m/s²، دون احتكاك). سرعته لحظة وصوله إلى الأرض`,v,[2*v,v/2,h],`mgh = ½mv² ⇒ v = √(2gh) = √${20*h} = ${v} m/s.`,'m/s')},
+()=>{const m=R(2,10),H=R(10,40),h=R(2,H-4);return GQ(`يسقط جسم كتلته ${m} kg من السكون من ارتفاع ${H} m. طاقته الحركية عند ارتفاع ${h} m (g = 10 m/s²)`,m*10*(H-h),[m*10*H,m*10*h,m*(H-h)],`KE = mg(H − h) = ${m} × 10 × ${H-h} = ${m*10*(H-h)} J.`,'J')},
+()=>{const h=P([5,20,45,80]);const v=Math.sqrt(20*h);return GQ(`يُترك بندول من السكون عند ارتفاع ${h} m فوق أخفض نقطة (g = 10 m/s²، دون احتكاك). سرعته عند أخفض نقطة`,v,[2*v,v/2,v*v],`mgh = ½mv² ⇒ v = ${v} m/s.`,'m/s')},
+()=>{const v=P([10,20,30,40]);const h=v*v/20;return GQ(`قُذف جسم رأسياً لأعلى بسرعة ${v} m/s (g = 10 m/s²). أقصى ارتفاع يصل إليه`,h,[v*v/10,v/10,v],`½mv² = mgh ⇒ h = v² ÷ 2g = ${v*v} ÷ 20 = ${h} m.`,'m')},
+()=>{const m=2*R(1,5),v=R(2,10),h=R(2,10);return GQ(`جسم كتلته ${m} kg سرعته ${v} m/s على ارتفاع ${h} m (g = 10 m/s²). طاقته الميكانيكية`,m*v*v/2+m*10*h,[m*v*v/2,m*10*h,m*v*v+m*10*h],`ME = ½mv² + mgh = ${m*v*v/2} + ${m*10*h} = ${m*v*v/2+m*10*h} J.`,'J')},
+()=>{const d=P([5,20,45]),h2=R(2,8);const v=Math.sqrt(20*d);return GQ(`عربة قطار ملاهٍ تنطلق من السكون من قمة ارتفاعها ${d+h2} m فتمر بنقطة ارتفاعها ${h2} m (g = 10 m/s²، دون احتكاك). سرعتها عند هذه النقطة`,v,[2*v,v/2,v*v],`½v² = g(H − h) ⇒ v = √(20 × ${d}) = ${v} m/s.`,'m/s')},
+()=>{const h=P([5,20,45,80,125]);const v=Math.sqrt(20*h);return GQ(`ينزلق جسم من السكون على مستوى مائل أملس ارتفاعه ${h} m (g = 10 m/s²). سرعته عند أسفل المستوى`,v,[2*v,v/2,h],`لا يؤثر طول المستوى: v = √(2gh) = ${v} m/s.`,'m/s')},
+()=>{const m=R(2,10),h=R(10,30),vf=R(2,8)*2;return GQ(`ينزلق جسم كتلته ${m} kg من السكون من ارتفاع ${h} m ويصل إلى الأسفل بسرعة ${vf} m/s (g = 10 m/s²). الطاقة المفقودة بالاحتكاك`,m*10*h-m*vf*vf/2,[m*10*h,m*vf*vf/2,m*10*h+m*vf*vf/2],`المفقودة = mgh − ½mv² = ${m*10*h} − ${m*vf*vf/2} = ${m*10*h-m*vf*vf/2} J.`,'J')},
+()=>{const H=R(2,20)*2;return GQ(`يسقط جسم من السكون من ارتفاع ${H} m. الارتفاع الذي تتساوى عنده طاقته الحركية وطاقة وضعه (بإهمال الاحتكاك)`,H/2,[H,H/4,2*H],`KE = PE ⇒ mg(H − h) = mgh ⇒ h = H ÷ 2 = ${H/2} m.`,'m')},
+()=>{const m=R(2,10),h=R(2,20);return GQ(`يسقط جسم كتلته ${m} kg من السكون من ارتفاع ${h} m. طاقته الحركية لحظة وصوله إلى الأرض (g = 10 m/s²)`,m*10*h,[m*h,m*10*h/2,m*10*h*2],`KE = mgh = ${m} × 10 × ${h} = ${m*10*h} J.`,'J')}
+],
+/* ===== 8 الآلات البسيطة ===== */
+s8:[
+()=>{const Fe=R(2,10)*10,k=R(2,6);return GQ(`آلة تؤثر بقوة مقاومة ${Fe*k} N عند بذل قوة جهد ${Fe} N. الفائدة الميكانيكية`,k,[Fe*k,1/k,Fe],`MA = Fr ÷ Fe = ${Fe*k} ÷ ${Fe} = ${k}.`)},
+()=>{const dr=R(1,5),k=R(2,6);return GQ(`تتحرك قوة الجهد مسافة ${dr*k} m بينما تتحرك قوة المقاومة ${dr} m. الفائدة الميكانيكية المثالية`,k,[dr*k,1/k,dr],`IMA = dₑ ÷ d_r = ${dr*k} ÷ ${dr} = ${k}.`)},
+()=>{const e=P([50,60,75,80,90]);return GQ(`آلة فائدتها المثالية 10 وفائدتها الميكانيكية ${e/10}. كفاءتها`,e,[e/10,100-e,e*10],`الكفاءة = (MA ÷ IMA) × 100 = (${e/10} ÷ 10) × 100 = ${e}%.`,'%')},
+()=>{const Win=R(2,10)*100,e=P([50,60,75,80,90]);return GQ(`آلة كفاءتها ${e}% وشغل الجهد المبذول عليها ${Win} J. الشغل الناتج`,Win*e/100,[Win,Win/e*100,Win*e],`W_out = كفاءة × W_in = ${e/100} × ${Win} = ${Win*e/100} J.`,'J')},
+()=>{const k=R(2,6),Fr=R(2,10)*30;return GQ(`رافعة مثالية فائدتها الميكانيكية ${k}. قوة الجهد اللازمة لرفع حمل ${Fr*k} N`,Fr,[Fr*k*k,Fr*k,Fr+k],`Fe = Fr ÷ MA = ${Fr*k} ÷ ${k} = ${Fr} N.`,'N')},
+()=>{const de=R(2,6),dr=1,Fr=R(2,6)*de*10;return GQ(`رافعة مثالية تتحرك قوة الجهد عندها ${de} m وتتحرك قوة المقاومة ${dr} m، وقوة المقاومة ${Fr} N. قوة الجهد`,Fr*dr/de,[Fr*de,Fr,Fr+de],`Fe·dₑ = Fr·d_r ⇒ Fe = ${Fr} × ${dr} ÷ ${de} = ${Fr/de} N.`,'N')},
+()=>{const n=R(2,6),W=n*R(20,60);return GQ(`نظام بكرات مثالي تحمل ${n} حبال الحمل الذي وزنه ${W} N. قوة الجهد اللازمة`,W/n,[W*n,W,W/(n+1)],`IMA = عدد الحبال = ${n}، Fe = W ÷ ${n} = ${W/n} N.`,'N')},
+()=>{const h=R(1,4),k=R(2,5);return GQ(`مستوى مائل طوله ${h*k} m وارتفاعه ${h} m. الفائدة الميكانيكية المثالية`,k,[h*k,1/k,h],`IMA = L ÷ h = ${h*k} ÷ ${h} = ${k}.`)},
+()=>{const Fe=R(2,10)*10,de=R(2,8);return GQ(`قوة جهد ${Fe} N تتحرك مسافة ${de} m في آلة. شغل الجهد المبذول`,Fe*de,[Fe+de,Fe/de,Fe*de*de],`W_in = Fe × dₑ = ${Fe} × ${de} = ${Fe*de} J.`,'J')},
+()=>{const Fr=R(2,10)*50,dr=R(1,5),W=Fr*dr,e=P([50,80]);return GQ(`آلة ترفع حملاً وزنه ${Fr} N مسافة ${dr} m وكفاءتها ${e}%. شغل الجهد المبذول عليها`,W*100/e,[W,W*e/100,W*e],`W_out = ${Fr} × ${dr} = ${W} J، W_in = W_out ÷ الكفاءة = ${f(W*100/e)} J.`,'J')}
+],
+/* ===== 9 القدرة ===== */
+s9:[
+()=>{const W=R(2,20)*100,t=R(2,10);return GQ(`بُذل شغل ${W} J خلال ${t} s. القدرة`,W/t,[W*t,W+t,t/W],`P = W ÷ t = ${W} ÷ ${t} = ${f(W/t)} W.`,'W')},
+()=>{const F=R(2,10)*1000,d=R(2,10),t=R(5,20);return GQ(`ترفع رافعة حملاً بقوة ${F} N مسافة ${d} m خلال ${t} s. القدرة`,F*d/t,[F*d*t,F*t/d,F/t],`P = Fd ÷ t = ${F*d} ÷ ${t} = ${f(F*d/t)} W.`,'W')},
+()=>{const F=R(2,10)*100,v=R(2,20);return GQ(`تتحرك سيارة بسرعة ثابتة ${v} m/s ضد قوة مقاومة ${F} N. قدرة محركها`,F*v,[F/v,F+v,F*v*v],`P = Fv = ${F} × ${v} = ${F*v} W.`,'W')},
+()=>{const P0=R(2,10)*100,t=R(2,10);return GQ(`محرك قدرته ${P0} W يعمل ${t} s. الشغل الذي يبذله`,P0*t,[P0/t,P0+t,P0*t*t],`W = Pt = ${P0} × ${t} = ${P0*t} J.`,'J')},
+()=>{const W=R(2,10)*1000,P0=R(2,10)*100;return GQ(`ينجز محرك قدرته ${P0} W شغلاً مقداره ${W*P0/P0} J. الزمن اللازم`,W/P0,[W*P0,W/P0*2,W/(P0*P0)],`t = W ÷ P = ${W} ÷ ${P0} = ${f(W/P0)} s.`,'s')},
+()=>{const k=R(2,20);return GQ(`محرك قدرته ${k} kW. قدرته بوحدة W`,k*1000,[k*100,k/1000,k*10],`1 kW = 1000 W ⇒ ${k} × 1000 = ${k*1000} W.`,'W')},
+()=>{const m=R(40,80),h=R(3,12),t=R(5,15);return GQ(`يصعد شخص كتلته ${m} kg درجاً ارتفاعه ${h} m خلال ${t} s (g = 10 m/s²). قدرته`,m*10*h/t,[m*h/t,m*10*h*t,m*10/t],`P = mgh ÷ t = ${m*10*h} ÷ ${t} = ${f(m*10*h/t)} W.`,'W')},
+()=>{const m=R(2,10)*50,h=R(2,10),t=R(5,20),e=P([50,80]);return GQ(`محرك يرفع حملاً كتلته ${m} kg ارتفاع ${h} m خلال ${t} s (g = 10 m/s²) وكفاءته ${e}%. القدرة التي يستهلكها`,m*10*h/t*100/e,[m*10*h/t,m*10*h/t*e/100,m*10*h*t],`P_out = ${f(m*10*h/t)} W، P_in = P_out ÷ الكفاءة = ${f(m*10*h/t*100/e)} W.`,'W')},
+()=>{const F=R(2,10)*100,P0=R(2,10)*1000;const v=P0/F;return GQ(`سيارة قدرة محركها ${P0} W تتحرك بقوة دفع ${F} N. سرعتها (v = P ÷ F)`,v,[P0*F,F/P0,P0-F],`v = P ÷ F = ${P0} ÷ ${F} = ${f(v)} m/s.`,'m/s')},
+()=>{const P0=R(2,9)*100,k=P([2,4,5]);return GQ(`آلة قدرتها ${P0} W تنجز شغلاً معيناً. إذا أنجزته آلة أخرى في زمن يساوي 1/${k} من الزمن فإن قدرتها`,P0*k,[P0*k*k,P0/k,P0+k],`P = W ÷ t فإذا قل الزمن ${k} مرات زادت القدرة ${k} مرات: ${P0*k} W.`,'W')}
+]};
+
+/* ===== أسئلة مفاهيمية: train (10) + extra (4) ===== */
+const H={
+s1:{train:[
+Q('الزخم هو حاصل ضرب','كتلة الجسم في سرعته المتجهة',['القوة في الزمن','الكتلة في التسارع','الشغل في الزمن'],'p = mv.'),
+Q('وحدة الزخم في النظام الدولي','kg·m/s',['kg·m/s²','N·m','J'],'p = kg × m/s.'),
+Q('الزخم كمية','متجهة في اتجاه السرعة',['قياسية','متجهة عكس السرعة','لا اتجاه لها'],'لأن السرعة المتجهة كمية متجهة.'),
+Q('يتناسب الزخم طردياً مع','الكتلة والسرعة معاً',['الكتلة فقط','السرعة فقط','الزمن'],'p = mv.'),
+Q('إذا تضاعفت سرعة جسم مع بقاء كتلته ثابتة فإن زخمه','يتضاعف',['يزداد أربع مرات','ينقص للنصف','لا يتغير'],'p ∝ v.'),
+Q('دراجة كتلتها 50 kg وزخمها 250 kg·m/s. سرعتها','5 m/s',['0.2 m/s','12500 m/s','300 m/s'],'v = p ÷ m = 250 ÷ 50 = 5 m/s.'),
+Q('سيارتان تسيران بالسرعة نفسها: الأكبر زخماً هي','الأكبر كتلة',['الأصغر كتلة','لهما الزخم نفسه','لا يمكن تحديدها'],'p ∝ m عند ثبات السرعة.'),
+Q('زخم جسم ساكن يساوي','صفراً',['كتلته','وزنه','سرعته'],'السرعة صفر.'),
+Q('جسم كتلته 2 kg يتحرك بسرعة 3 m/s غرباً. زخمه','6 kg·m/s غرباً',['6 kg·m/s شرقاً','1.5 kg·m/s غرباً','5 kg·m/s غرباً'],'p = mv.'),
+Q('جسمان متساويان في الكتلة، الأكبر زخماً هو','الأسرع',['الأبطأ','لا فرق','الأكثر ارتفاعاً'],'p ∝ v.')],
+extra:[
+Q('إذا قلت سرعة جسم إلى النصف مع ثبات كتلته فإن زخمه','يقل إلى النصف',['يتضاعف','لا يتغير','يقل إلى الربع'],'p ∝ v.'),
+Q('أي الكميات الآتية يعتمد عليها زخم الجسم؟','الكتلة والسرعة المتجهة',['الكتلة فقط','اللون','الحجم فقط'],'p = mv.'),
+Q('شاحنة 2000 kg تسير بسرعة 10 m/s وسيارة 1000 kg تسير بسرعة 20 m/s. زخماهما','متساويان',['زخم الشاحنة أكبر','زخم السيارة أكبر','لا يمكن المقارنة'],'كلاهما 20000 kg·m/s.'),
+Q('جسمان زخماهما في اتجاهين متعاكسين، الزخم الكلي لهما يساوي','الفرق الاتجاهي بين زخميهما',['مجموع المقدارين','حاصل الضرب','صفر دائماً'],'الزخم متجه فيجمع اتجاهياً.')]},
+s2:{train:[
+Q('الدفع هو حاصل ضرب','القوة في زمن تأثيرها',['القوة في المسافة','الكتلة في السرعة','الشغل في الزمن'],'J = FΔt.'),
+Q('وحدة الدفع تكافئ','N·s = kg·m/s',['N·m','J','W'],'N·s = kg·m/s.'),
+Q('ينص مبدأ الدفع – الزخم على أن الدفع المؤثر في جسم يساوي','التغير في زخمه',['طاقته الحركية','الشغل المبذول','وزنه'],'FΔt = Δp.'),
+Q('يمد لاعب كرة السلة يديه مع اتجاه الكرة عند استقبالها لـ','زيادة زمن التصادم فتقل القوة',['تقليل الزمن لزيادة القوة','زيادة السرعة','زيادة الكتلة'],'FΔt ثابت فزيادة Δt تقلل F.'),
+Q('تحمي الوسادة الهوائية الركاب لأنها','تزيد زمن التصادم فتقل القوة المؤثرة',['تقلل الزخم إلى الصفر فوراً','تزيد الكتلة','تقلل زمن التصادم'],'التغير في الزخم نفسه لكن بزمن أطول.'),
+Q('المساحة تحت منحنى (القوة – الزمن) تمثل','الدفع',['الشغل','القدرة','الزخم الابتدائي فقط'],'المساحة = F × Δt.'),
+Q('قوة 10 N تؤثر 5 s. الدفع','50 N·s',['2 N·s','15 N·s','5 N·s'],'J = 10 × 5 = 50.'),
+Q('الدفع كمية','متجهة في اتجاه القوة',['قياسية','متجهة عكس القوة','لا اتجاه لها'],'J = FΔt.'),
+Q('دفع واحد يؤثر في جسمين مختلفين في الكتلة. التغير في زخميهما','متساوٍ',['أكبر للأخف','أكبر للأثقل','صفر'],'Δp = J.'),
+Q('عند ركل الكرة تكون القوة كبيرة جداً لأن زمن التأثير','قصير جداً',['طويل جداً','صفر','لا علاقة له'],'يتحقق الدفع بقوة كبيرة في زمن قصير.')],
+extra:[
+Q('عند إنقاص زمن التصادم مع بقاء الدفع ثابتاً فإن القوة','تزداد',['تقل','لا تتغير','تنعدم'],'F = J ÷ Δt.'),
+Q('وحدة التغير في الزخم هي نفسها وحدة','الدفع',['الشغل','القدرة','القوة'],'Δp = J.'),
+Q('يثني المظلي ركبتيه عند الهبوط ليزيد','زمن التصادم',['السرعة','القوة','الكتلة'],'تقل القوة بزيادة الزمن.'),
+Q('يكون الدفع صفراً عندما','تكون القوة صفراً أو زمن التأثير صفراً',['تكون الكتلة كبيرة','تكون السرعة كبيرة','تكون المسافة كبيرة'],'J = FΔt.')]},
+s3:{train:[
+Q('ينص قانون حفظ الزخم على أن الزخم الكلي لنظام معزول','يبقى ثابتاً',['يتزايد دائماً','يتناقص دائماً','يساوي الصفر دائماً'],'عند عدم وجود قوة خارجية محصلة.'),
+Q('النظام المعزول هو نظام','لا تؤثر فيه قوى خارجية محصلة',['لا توجد فيه قوى','ساكن','كتلته ثابتة فقط'],'القوى الداخلية فقط.'),
+Q('في التصادم المرن يكون','الزخم والطاقة الحركية محفوظين',['الزخم فقط محفوظاً','الطاقة الحركية فقط','لا شيء محفوظاً'],'تعريف التصادم المرن.'),
+Q('في التصادم غير المرن يكون','الزخم محفوظاً والطاقة الحركية غير محفوظة',['الزخم غير محفوظ','كلاهما محفوظاً','كلاهما غير محفوظ'],'يتحول جزء من الطاقة إلى حرارة وصوت.'),
+Q('في التصادم عديم المرونة التام','يلتحم الجسمان ويتحركان معاً',['يرتدان بسرعتين متساويتين','لا يتغير زخماهما','يتوقفان دائماً'],'أقصى فقد للطاقة الحركية.'),
+Q('عند إطلاق رصاصة من مسدس ساكن يرتد المسدس لأن','الزخم الكلي يبقى صفراً',['الطاقة تفنى','المسدس أخف دائماً','الهواء يدفعه'],'زخم الرصاصة للأمام يوازنه زخم المسدس للخلف.'),
+Q('يكون الزخم محفوظاً عندما','لا توجد قوة خارجية محصلة على النظام',['تكون الطاقة محفوظة فقط','يكون التصادم مرناً فقط','تكون السرعة ثابتة لجسم واحد'],'شرط حفظ الزخم.'),
+Q('تصطدم شاحنة بسيارة صغيرة وتلتحمان. التغير في سرعة السيارة الأصغر','أكبر من التغير في سرعة الشاحنة',['أقل','يساويه','صفر'],'الدفعان متساويان والكتلة الأصغر تتغير سرعتها أكثر.'),
+Q('أثناء التصادم تكون قوتا الدفع المتبادلتان بين الجسمين','متساويتين مقداراً ومتعاكستين اتجاهاً',['متساويتين اتجاهاً','متفاوتتين','صفراً'],'قانون نيوتن الثالث.'),
+Q('جسم ساكن ينفجر إلى قطعتين. الزخم الكلي للقطعتين بعد الانفجار','صفر',['يساوي كتلة الجسم','أكبر من الصفر','سالب دائماً'],'كان الزخم صفراً قبل الانفجار.')],
+extra:[
+Q('عند تصادم مرن مباشر بين كرتين متماثلتين إحداهما ساكنة','تتبادلان السرعتين',['تلتحمان','تتوقفان','ترتدان بسرعة أكبر'],'خاصية للكتل المتساوية.'),
+Q('في التصادم عديم المرونة التام تقل','الطاقة الحركية الكلية',['الزخم الكلي','الكتلة','الدفع'],'الزخم محفوظ والطاقة تقل.'),
+Q('يرتد مدفع إلى الخلف عند إطلاق قذيفة لأن','زخم القذيفة للأمام يوازنه زخم المدفع للخلف',['الهواء يدفعه','الجاذبية','الاحتكاك'],'حفظ الزخم.'),
+Q('الدفعان المتبادلان بين جسمين متصادمين','متساويان ومتعاكسان',['متساويان وفي الاتجاه نفسه','غير متساويين','صفر'],'التغيران في الزخم متساويان متعاكسان.')]},
+s4:{train:[
+Q('يعطى الشغل المبذول بقوة ثابتة بالعلاقة','W = Fd cosθ',['W = F ÷ d','W = Ft','W = mv'],'θ الزاوية بين القوة والإزاحة.'),
+Q('الجول يكافئ','N·m',['N·s','W·s⁻¹','kg·m/s'],'J = N × m.'),
+Q('الشغل كمية','قياسية',['متجهة','لا وحدة لها','تساوي القوة'],'له مقدار فقط وقد يكون سالباً.'),
+Q('القوة العمودية على اتجاه الإزاحة','لا تبذل شغلاً',['تبذل أكبر شغل','تبذل شغلاً سالباً دائماً','تضاعف الشغل'],'cos90° = 0.'),
+Q('يكون شغل قوة الاحتكاك على جسم منزلق','سالباً',['موجباً','صفراً دائماً','أكبر من شغل القوة الدافعة دائماً'],'تعاكس الإزاحة (θ = 180°).'),
+Q('شغل الجاذبية على جسم يُرفع رأسياً إلى أعلى','سالب',['موجب','صفر','لا يمكن تحديده'],'الجاذبية تعاكس الإزاحة.'),
+Q('إذا لم يتحرك الجسم رغم تأثير قوة عليه فإن الشغل','صفر',['موجب','سالب','لا يمكن تحديده'],'لا إزاحة.'),
+Q('عامل بذل شغلاً 210 J لرفع صندوق ارتفاعه 3 m. كتلة الصندوق (g = 10 m/s²)','7 kg',['70 kg','21 kg','0.14 kg'],'m = W ÷ (gh) = 210 ÷ 30 = 7 kg.'),
+Q('دفع شخص صندوقاً كتلته 60 kg مسافة 10 m على سطح معامل احتكاكه 0.1 (g = 10 m/s²). شغل الاحتكاك','−600 J',['600 J','−60 J','−6000 J'],'f = 0.1 × 600 = 60 N، W = −60 × 10 = −600 J.'),
+Q('قوة 5 N تصنع زاوية 60° مع الإزاحة 6 m. الشغل','15 J',['30 J','26 J','3 J'],'W = 5 × 6 × 0.5 = 15 J.')],
+extra:[
+Q('عندما تكون القوة في اتجاه الإزاحة تماماً يكون الشغل','W = Fd',['W = 0','W = −Fd','W = F ÷ d'],'cos0° = 1.'),
+Q('المساحة تحت منحنى (القوة – الإزاحة) تمثل','الشغل',['القدرة','الدفع','الزخم'],'المساحة = F × d.'),
+Q('الشغل الكلي (المحصل) المبذول على جسم يساوي','التغير في طاقته الحركية',['التغير في زخمه','وزنه','قدرته'],'نظرية الشغل والطاقة.'),
+Q('حمل شخص صندوقاً أفقياً بسرعة ثابتة. شغل قوة رفع يده على الصندوق','صفر',['موجب','سالب','يساوي الوزن'],'القوة رأسية والإزاحة أفقية.')]},
+s5:{train:[
+Q('تعطى الطاقة الحركية بالعلاقة','KE = ½mv²',['KE = mv','KE = mgh','KE = Fd'],'وحدتها الجول.'),
+Q('الطاقة الحركية تتناسب طردياً مع','مربع السرعة',['السرعة','الزمن','جذر السرعة'],'KE ∝ v².'),
+Q('الطاقة الحركية تتناسب طردياً مع','الكتلة',['مربع الكتلة','مقلوب الكتلة','لا تعتمد عليها'],'KE ∝ m.'),
+Q('جسم كتلته 2 kg سرعته 1 m/s. طاقته الحركية','1 J',['2 J','0.5 J','4 J'],'½ × 2 × 1 = 1 J.'),
+Q('الشغل المحصل على جسم يساوي','التغير في طاقته الحركية',['طاقته الكلية','وزنه','زخمه'],'W = ΔKE.'),
+Q('يؤدي الشغل السالب المبذول على جسم إلى','نقصان طاقته الحركية',['زيادتها','ثباتها','انعدام كتلته'],'W = ΔKE < 0.'),
+Q('إذا تضاعفت سرعة جسم فإن طاقته الحركية','تصبح 4 أمثالها',['تتضاعف','تصبح نصفها','لا تتغير'],'KE ∝ v².'),
+Q('الطاقة الحركية','لا تكون سالبة أبداً',['قد تكون سالبة','متجهة','تساوي الزخم'],'½mv² ≥ 0.'),
+Q('إذا تضاعفت كتلة جسم وقلت سرعته للنصف فإن طاقته الحركية','تصبح نصف ما كانت',['تتضاعف','لا تتغير','تصبح ربعها'],'½(2m)(v/2)² = ¼mv² وهي نصف القيمة الأصلية ½mv².'),
+Q('تساوت الطاقة الحركية لجسمين وكتلة الأول 4 أمثال كتلة الثاني. نسبة سرعة الأول إلى الثاني','1 : 2',['2 : 1','4 : 1','1 : 4'],'4m v₁² = m v₂² ⇒ v₁ = v₂ ÷ 2.')],
+extra:[
+Q('جسم كتلته 3 kg وسرعته 2 m/s. طاقته الحركية','6 J',['12 J','3 J','1.5 J'],'½ × 3 × 4 = 6 J.'),
+Q('إذا زادت السرعة إلى 3 أمثالها فإن الطاقة الحركية','تصبح 9 أمثالها',['تتضاعف 3 مرات','تصبح 6 أمثالها','لا تتغير'],'KE ∝ v².'),
+Q('إذا كان الشغل الكلي على جسم موجباً فإن طاقته الحركية','تزداد',['تقل','لا تتغير','تنعدم'],'W = ΔKE > 0.'),
+Q('وحدة الطاقة الحركية','J',['N','W','kg·m/s'],'جول.')]},
+s6:{train:[
+Q('تعطى طاقة وضع الجاذبية بالعلاقة','PE = mgh',['PE = ½mv²','PE = Fd','PE = mv'],'وحدتها الجول.'),
+Q('تعتمد قيمة طاقة الوضع على','المستوى المرجعي المختار',['اللون','السرعة فقط','الزمن فقط'],'h تقاس من مستوى الصفر.'),
+Q('تتناسب طاقة وضع الجاذبية طردياً مع','الارتفاع',['مربع الارتفاع','مقلوب الارتفاع','الزمن'],'PE ∝ h.'),
+Q('جسم كتلته 10 kg على ارتفاع 10 m (g = 10 m/s²). طاقة وضعه','1000 J',['100 J','10 J','10000 J'],'PE = 10 × 10 × 10 = 1000 J.'),
+Q('الطاقة المخزنة في نابض مضغوط تسمى طاقة وضع','مرونية',['جاذبية','كيميائية','حركية'],'ناتجة عن تشوه المرن.'),
+Q('الطاقة المخزنة في الوقود والغذاء هي طاقة وضع','كيميائية',['مرونية','جاذبية','نووية فقط'],'مخزنة في الروابط الكيميائية.'),
+Q('يساوي الشغل المبذول لرفع جسم بسرعة ثابتة','التغير في طاقة وضعه',['طاقته الحركية','صفراً','وزنه'],'W = ΔPE.'),
+Q('جسم طاقة وضعه 1960 J على ارتفاع 10 m (g = 9.8 m/s²). كتلته','20 kg',['2 kg','196 kg','1.96 kg'],'m = PE ÷ (gh) = 1960 ÷ 98 = 20 kg.'),
+Q('أي الأجسام الآتية أكبر طاقة وضع: 4 kg عند 3 m، 5 kg عند 2 m، 2 kg عند 5 m، 3 kg عند 5 m؟','3 kg عند 5 m',['4 kg عند 3 m','5 kg عند 2 m','2 kg عند 5 m'],'mh = 15 هي الأكبر.'),
+Q('تُخزَّن طاقة الوضع في الوتر المشدود في القوس على شكل','طاقة مرونية',['طاقة حركية','طاقة كيميائية','طاقة حرارية'],'بسبب تشوه الوتر.')],
+extra:[
+Q('عند قذف جسم لأعلى تزداد','طاقة وضعه',['كتلته','وزنه','سرعته'],'يزداد h.'),
+Q('طاقة وضع جسم على سطح القمر مقارنة بالأرض عند الارتفاع نفسه','أقل',['أكبر','مساوية','صفر'],'g القمر أقل.'),
+Q('تكون طاقة وضع الجاذبية صفراً عند','المستوى المرجعي',['القمة دائماً','أي ارتفاع','لا يمكن'],'h = 0.'),
+Q('الطاقة المخزنة في وتر القوس المشدود','مرونية',['حركية','كيميائية','نووية'],'بسبب شده.')]},
+s7:{train:[
+Q('الطاقة الميكانيكية لجسم هي','مجموع طاقتيه الحركية والوضع',['حاصل ضربهما','الفرق بينهما','طاقته الحركية فقط'],'ME = KE + PE.'),
+Q('ينص قانون حفظ الطاقة الميكانيكية على أن الطاقة الميكانيكية','تبقى ثابتة عند عدم وجود احتكاك أو قوى مبددة',['تزداد دائماً','تنقص دائماً','تساوي صفراً'],'للنظام المعزول من القوى غير المحافظة.'),
+Q('أثناء السقوط الحر تتحول طاقة الوضع إلى','طاقة حركية',['طاقة مرونية','طاقة كيميائية','لا شيء'],'تزداد KE وتنقص PE.'),
+Q('عند أخفض نقطة في حركة البندول تكون','الطاقة الحركية أكبر ما يمكن',['طاقة الوضع أكبر ما يمكن','الطاقة الحركية صفراً','الطاقة الكلية صفراً'],'سرعته أكبر.'),
+Q('عند أعلى نقطة في حركة البندول تكون','طاقة الوضع أكبر ما يمكن',['الطاقة الحركية أكبر ما يمكن','الطاقة الميكانيكية صفراً','السرعة أكبر ما يمكن'],'تنعدم سرعته لحظياً.'),
+Q('مع وجود احتكاك تتناقص الطاقة الميكانيكية لأن جزءاً منها يتحول إلى','طاقة حرارية',['زخم','كتلة','شحنة'],'تتحول إلى حرارة وصوت.'),
+Q('يسقط جسم من السكون من ارتفاع 80 m (g = 10 m/s²). سرعته عند الأرض','40 m/s',['80 m/s','20 m/s','1600 m/s'],'v = √(2 × 10 × 80) = 40 m/s.'),
+Q('قُذف جسم لأعلى بسرعة 20 m/s (g = 10 m/s²). أقصى ارتفاع','20 m',['40 m','10 m','200 m'],'h = v² ÷ 2g = 400 ÷ 20 = 20 m.'),
+Q('عند أقصى ارتفاع لجسم مقذوف رأسياً يتحول','كل طاقته الحركية إلى طاقة وضع',['كل طاقة الوضع إلى حرارة','لا يتغير شيء','الطاقة تفنى'],'تنعدم السرعة.'),
+Q('لتصل عربة قطار ملاهٍ إلى قمة تالية يجب أن يكون ارتفاع نقطة انطلاقها','أكبر من ارتفاع تلك القمة أو مساوياً له',['أقل من ارتفاعها','لا علاقة له','صفراً'],'تحتاج طاقة وضع ابتدائية كافية.')],
+extra:[
+Q('ينزلق جسمان من الارتفاع نفسه على مستويين أملسين مختلفي الميل. سرعتاهما عند الأسفل','متساويتان',['الأكثر ميلاً أكبر','الأقل ميلاً أكبر','لا يمكن تحديدها'],'v = √(2gh) لا تعتمد على الميل.'),
+Q('عند ارتفاع يساوي نصف ارتفاع السقوط تكون','KE تساوي PE',['KE ضعف PE','PE ضعف KE','KE صفراً'],'mg(H−h) = mgh ⇒ h = H/2.'),
+Q('الطاقة الميكانيكية الكلية لجسم يسقط سقوطاً حراً','ثابتة',['تزداد','تنقص','تنعدم'],'بإهمال الهواء.'),
+Q('عند أخفض نقطة تكون طاقة الوضع','أقل ما يمكن',['أكبر ما يمكن','تساوي الحركية دائماً','لا يمكن تحديدها'],'h أصغر.')]},
+s8:{train:[
+Q('الفائدة الميكانيكية لآلة هي','MA = Fr ÷ Fe',['MA = Fe ÷ Fr','MA = Fr × Fe','MA = dₑ × d_r'],'نسبة قوة المقاومة إلى قوة الجهد.'),
+Q('الفائدة الميكانيكية المثالية','IMA = dₑ ÷ d_r',['IMA = d_r ÷ dₑ','IMA = Fr ÷ Fe','IMA = Wout ÷ Win'],'نسبة مسافة الجهد إلى مسافة المقاومة.'),
+Q('تحسب كفاءة الآلة من العلاقة','(W_out ÷ W_in) × 100%',['W_in ÷ W_out','(Fe ÷ Fr) × 100','dₑ ÷ d_r'],'الكفاءة نسبة الشغل الناتج إلى الشغل المبذول.'),
+Q('كفاءة أي آلة حقيقية','أقل من 100%',['أكبر من 100%','تساوي 100% دائماً','صفر دائماً'],'بسبب الاحتكاك وفقد الطاقة.'),
+Q('في الآلة المثالية','MA = IMA والكفاءة 100%',['MA أكبر من IMA','الكفاءة أقل من 100%','MA = 0'],'لا يوجد فقد في الطاقة.'),
+Q('أي مما يأتي ليس من الآلات البسيطة؟','المحرك الكهربائي',['الرافعة','البكرة','المستوى المائل'],'المحرك آلة مركبة تحول طاقة.'),
+Q('المقص مثال على رافعة','من النوع الأول (نقطة الارتكاز بين الجهد والمقاومة)',['من النوع الثالث','بكرة ثابتة','مستوى مائل'],'نقطة الارتكاز بين القوتين.'),
+Q('كلما زاد طول المستوى المائل لارتفاع ثابت','قلت قوة الجهد اللازمة',['زادت قوة الجهد','لم يتغير الشغل المثالي ولا القوة','انعدمت قوة الاحتكاك'],'IMA = L ÷ h تزداد.'),
+Q('آلة فائدتها الميكانيكية 3. قوة الجهد مقارنة بقوة المقاومة','ثلث قوة المقاومة',['ثلاثة أمثالها','تساويها','تسعة أمثالها'],'Fe = Fr ÷ 3.'),
+Q('الآلات البسيطة','تغير مقدار القوة أو اتجاهها ولا تقلل الشغل',['تقلل الشغل الكلي','تزيد الطاقة','تخلق طاقة'],'الشغل الناتج لا يزيد على المبذول.')],
+extra:[
+Q('الفائدة الميكانيكية المثالية لنظام بكرات تساوي','عدد الحبال الحاملة للحمل',['عدد البكرات الثابتة فقط','صفراً','1 دائماً'],'IMA = n.'),
+Q('كفاءة آلة 75% تعني أن','75% من الشغل المبذول يتحول إلى شغل مفيد',['الآلة تعمل 75% من الوقت','الشغل الناتج أكبر من المبذول','قوة الجهد 75 N'],'W_out = 0.75 W_in.'),
+Q('تقل كفاءة الآلة بسبب','قوى الاحتكاك',['تقليل الحمل','زيادة الطول','الجاذبية فقط'],'يتبدد جزء من الطاقة.'),
+Q('الفائدة الميكانيكية كمية','بلا وحدة',['وحدتها N','وحدتها J','وحدتها W'],'نسبة قوتين.')]},
+s9:{train:[
+Q('القدرة هي','معدل بذل الشغل: P = W ÷ t',['الشغل × الزمن','القوة ÷ الإزاحة','الطاقة × السرعة'],'وحدتها الواط.'),
+Q('الواط يكافئ','J/s',['J·s','N·m','kg·m/s'],'W = J ÷ s.'),
+Q('القدرة بدلالة القوة والسرعة','P = Fv',['P = F ÷ v','P = F + v','P = Fv²'],'P = Fd/t = Fv.'),
+Q('1 kW يساوي','1000 W',['100 W','10 W','10000 W'],'كيلو = 1000.'),
+Q('عند إنجاز الشغل نفسه في زمن أقل تكون القدرة','أكبر',['أقل','نفسها','صفراً'],'P = W ÷ t.'),
+Q('رافعة ترفع حملاً بقوة 20000 N مسافة 5 m خلال 10 s. قدرتها','10 kW',['100 kW','1 kW','20 kW'],'P = 20000 × 5 ÷ 10 = 10000 W = 10 kW.'),
+Q('الكيلوواط ساعة (kWh) وحدة','طاقة',['قدرة','قوة','زخم'],'كيلوواط × ساعة.'),
+Q('المحرك الأكبر قدرة ينجز نفس الشغل','في زمن أقل',['في زمن أكبر','بقوة أقل دائماً','دون طاقة'],'P = W ÷ t.'),
+Q('محرك قدرته 10 kW يبذل في كل ثانية شغلاً مقداره','10000 J',['10 J','100 J','1000 J'],'10 kW = 10000 J/s.'),
+Q('الشغل المبذول يساوي','القدرة × الزمن',['القدرة ÷ الزمن','القدرة + الزمن','القدرة × المسافة'],'W = Pt.')],
+extra:[
+Q('الحصان الميكانيكي (hp) وحدة قدرة تساوي تقريباً','746 W',['100 W','1 kW','10 kW'],'1 hp ≈ 746 W.'),
+Q('كفاءة محرك تساوي','القدرة المفيدة ÷ القدرة المستهلكة',['القدرة المستهلكة ÷ المفيدة','القدرة × الزمن','القوة ÷ السرعة'],'نسبة أقل من 1.'),
+Q('سيارة تتحرك بسرعة ثابتة تزداد قدرة محركها عند زيادة','قوة المقاومة التي تغلبها',['كتلة السائق فقط','لون السيارة','لا شيء'],'P = Fv.'),
+Q('أي الكميات الآتية تقاس بوحدة الواط؟','معدل بذل الشغل',['الشغل','الزخم','القوة'],'W = J/s.')]}
+};
+
+const NAMES={s1:'الزخم',s2:'الدفع',s3:'قانون حفظ الزخم',s4:'الشغل',s5:'الطاقة الحركية',s6:'طاقة وضع الجاذبية',s7:'قانون حفظ الطاقة الميكانيكية',s8:'الآلات البسيطة والفائدة الميكانيكية والكفاءة',s9:'القدرة الميكانيكية'};
+const COL={s1:'#0e7c86',s2:'#c2410c',s3:'#7c3aed',s4:'#15803d',s5:'#be185d',s6:'#0369a1',s7:'#a16207',s8:'#475569',s9:'#0f766e'};
+const KEYS=['s1','s2','s3','s4','s5','s6','s7','s8','s9'];
+const SECTIONS=[];
+KEYS.forEach((k,i)=>{
+  SECTIONS.push({id:k,n:i+1,title:NAMES[k],short:NAMES[k].split(' و')[0].slice(0,32),color:COL[k],
+    train:[...H[k].train,...TP[k]],                       /* 10 مفاهيمية + 10 رقمية = 20 */
+    quiz:[...H[k].extra,...TP[k].slice(0,6)]});          /* 4 + 6 = 10 */
+});
+/* القسم العاشر الشامل: 60 */
+SECTIONS.push({id:'s10',n:10,title:'القسم الشامل (60 سؤالاً)',short:'القسم الشامل',color:'#1d4ed8',
+  train:KEYS.flatMap(k=>[H[k].extra[0],...TP[k].slice(0,6)]).slice(0,60),quiz:[]});
+/* الاختبار النهائي: 50 */
+SECTIONS.push({id:'final',n:11,title:'الاختبار النهائي (نمط التحصيلي)',short:'الاختبار النهائي',color:'#b91c1c',
+  train:[...KEYS.flatMap(k=>[H[k].extra[1],...TP[k].slice(5,9)]),...KEYS.slice(0,5).map(k=>TP[k][9])],quiz:[]});
+
+</script>
+<script>
+"use strict";
+/* ============ إعدادات المنصة ============ */
+const EMAIL='momran1985@gmail.com';          // بريد المعلم لاستقبال النتائج — يمكن تغييره من هنا
+const TEACHER_PHONE='0563264267';
+const TEACHER='أ. محمد عمران';
+const TEACHER_TITLE='مدرب التحصيلي';
+const SCHOOL='مدارس الأنجال الأهلية بالأحساء';
+const PLATFORM='منصة اختبارات تحصيلي فيزياء — الزخم والطاقة والشغل';
+const STORE='tahsili_energy_platform_v1';
+const QUIZ_SECS=600, FINAL_SECS=3600;
+const LET=['أ','ب','ج','د'];
+
+/* ============ أدوات ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const RX=/[−\-]?(?:[A-Za-z0-9Δπθμₓ√²³°%₀₁₂⁰¹⁴⁵⁶⁷⁸⁹(][A-Za-z0-9Δπθμₓ√−\-+=×÷·.,()\/\^²³°%_̄₀₁₂⁰¹⁴⁵⁶⁷⁸⁹ ]*[A-Za-z0-9Δπθμₓ²³°%)̄₀₁₂⁰¹⁴⁵⁶⁷⁸⁹]|[A-Za-z0-9Δπθμₓ])/g;
+function fx(s){let out='',last=0,m;RX.lastIndex=0;s=String(s);
+  while((m=RX.exec(s))){out+=esc(s.slice(last,m.index))+'<bdi dir="ltr">'+esc(m[0])+'</bdi>';last=m.index+m[0].length}
+  return out+esc(s.slice(last))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const mmss=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const toEn=s=>String(s).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+const dateAr=d=>new Date(d).toLocaleString('ar-SA',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2400)}
+
+/* ============ التخزين (المتصفح) ============ */
+let mem=null;
+function load(){try{const r=localStorage.getItem(STORE);if(r)return JSON.parse(r)}catch(e){}return mem||{cur:null,users:{}}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(db))}catch(e){mem=db}}
+let db=load();
+const user=()=>db.cur&&db.users[db.cur];
+
+/* ============ الرسوم البيانية ============ */
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r/5)));for(const m of [1,2,2.5,5,10]){if(r/(m*p)<=6)return m*p}return 10*p}
+const nf=v=>String(Number(v.toFixed(2)));
+function drawGraph(g){
+  const W=360,H=232,ml=52,mr=20,mt=16,mb=46,cols=['#0e7c86','#e8590c'];
+  const xs=[],ys=[];g.L.forEach(l=>l.p.forEach(([x,y])=>{xs.push(x);ys.push(y)}));
+  let xmax=Math.max(...xs),ymax=Math.max(...ys,0),ymin=Math.min(...ys,0);
+  const sx=niceStep(xmax),sy=niceStep((ymax-ymin)||1);
+  xmax=Math.ceil(xmax/sx-1e-9)*sx;ymax=Math.ceil(ymax/sy-1e-9)*sy;ymin=Math.floor(ymin/sy+1e-9)*sy;
+  const X=x=>ml+x/xmax*(W-ml-mr),Y=y=>mt+(ymax-y)/(ymax-ymin)*(H-mt-mb);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="رسم بياني">`;
+  for(let x=0;x<=xmax+1e-9;x+=sx){s+=`<line x1="${X(x)}" y1="${mt}" x2="${X(x)}" y2="${H-mb}" stroke="#e5dfca" stroke-width="1"/><text x="${X(x)}" y="${H-mb+15}" font-size="11" text-anchor="middle" fill="#34476b">${nf(x)}</text>`}
+  for(let y=ymin;y<=ymax+1e-9;y+=sy){s+=`<line x1="${ml}" y1="${Y(y)}" x2="${W-mr}" y2="${Y(y)}" stroke="#e5dfca" stroke-width="1"/><text x="${ml-6}" y="${Y(y)+4}" font-size="11" text-anchor="end" fill="#34476b">${nf(y)}</text>`}
+  s+=`<line x1="${ml}" y1="${Y(0)}" x2="${W-mr}" y2="${Y(0)}" stroke="#10264a" stroke-width="1.8"/><line x1="${ml}" y1="${mt}" x2="${ml}" y2="${H-mb}" stroke="#10264a" stroke-width="1.8"/>`;
+  const xl=g.xl||'الزمن (s)',yl=g.yl||(g.k==='xt'?'الموقع (m)':'السرعة المتجهة (m/s)');
+  s+=`<text x="${(ml+W-mr)/2}" y="${H-6}" font-size="12" font-weight="700" text-anchor="middle" fill="#10264a">${xl}</text>`;
+  s+=`<text transform="translate(13 ${(mt+H-mb)/2}) rotate(-90)" font-size="12" font-weight="700" text-anchor="middle" fill="#10264a">${yl}</text>`;
+  g.L.forEach((l,i)=>{const c=cols[i%2];
+    s+=`<polyline fill="none" stroke="${c}" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round" points="${l.p.map(([x,y])=>X(x)+','+Y(y)).join(' ')}"/>`;
+    if(l.p.length<=4)l.p.forEach(([x,y])=>{s+=`<circle cx="${X(x)}" cy="${Y(y)}" r="3.2" fill="${c}"/>`});
+    if(l.n){const [x,y]=l.p[l.p.length-1];s+=`<text x="${X(x)-6}" y="${Y(y)-7}" font-size="14" font-weight="800" fill="${c}" text-anchor="end">${l.n}</text>`}
+  });
+  return s+'</svg>'}
+
+/* ============ الجلسة ============ */
+let S=null,tick=null;
+const SEC=id=>SECTIONS.find(s=>s.id===id);
+function bank(secId,mode){
+  const sec=SEC(secId);
+  if(mode==='train'||mode==='final')return sec.train;
+  if(secId==='s10')return shuffle(['s1','s2','s3','s4','s5','s6','s7','s8','s9'].flatMap(i=>SEC(i).quiz.map(x=>typeof x==='function'?x():x))).slice(0,10);
+  return sec.quiz;}
+function build(secId,mode,random){
+  let b=bank(secId,mode);if(random)b=shuffle(b);
+  return b.map(q=>{if(typeof q==='function')q=q();const idx=shuffle([0,1,2,3]);return{q:q.q,g:q.g,e:q.e,o:idx.map(i=>q.o[i]),c:idx.indexOf(0)}})}
+function start(secId,mode,random){
+  clearInterval(tick);
+  const sec=SEC(secId);
+  S={sec,mode,qs:build(secId,mode,random),i:0,ans:[],pts:[],t0:Date.now(),qs0:Date.now(),
+     limit:mode==='quiz'?QUIZ_SECS:mode==='final'?FINAL_SECS:0,done:false};
+  if(S.limit){tick=setInterval(onTick,1000)}
+  renderQ(true);window.scrollTo(0,0)}
+function onTick(){
+  if(!S||S.done){clearInterval(tick);return}
+  const left=S.limit-(Date.now()-S.t0)/1000,e=$('#timer');
+  if(e){e.textContent=mmss(left);e.classList.toggle('low',left<=60)}
+  if(left<=0){toast('انتهى الوقت — تم تسليم الاختبار');finish()}}
+
+/* ============ شاشة الدخول ============ */
+function viewLogin(){
+  $('#app').innerHTML=`
+  <div class="login">
+    <div class="hero">
+      <span class="tag">${TEACHER_TITLE} · ${TEACHER}</span>
+      <h1>منصة اختبارات <span>التحصيلي</span><br>فيزياء — الزخم والطاقة</h1>
+      <p>تدرّب على أسئلة الزخم والدفع، الشغل والطاقة وحفظها، الآلات البسيطة، والقدرة وفق المنهج السعودي، مع تصحيح فوري وتفسير لكل سؤال، ثم اختبر نفسك واحصل على شهادة إنجاز.</p>
+      <svg viewBox="0 0 360 170" aria-hidden="true">
+        <path d="M20 10V150H345" fill="none" stroke="#10264a" stroke-opacity=".35" stroke-width="1.5"/>
+        <path class="trace" d="M20 150 C 90 150, 120 140, 170 100 S 260 20, 330 20" fill="none" stroke="#e8590c" stroke-width="4" stroke-linecap="round"/>
+        <circle class="dot" r="7" fill="#10264a"/>
+        <text x="332" y="164" font-size="11" fill="#34476b" text-anchor="end">t</text><text x="8" y="16" font-size="11" fill="#34476b">x</text>
+      </svg>
+    </div>
+    <form class="card form" id="lf" autocomplete="off">
+      <h2>تسجيل الدخول</h2>
+      <p class="hint">تُحفظ بياناتك ونتائجك في هذا المتصفح فقط.</p>
+      <label for="nm">الاسم الثلاثي</label>
+      <input type="text" id="nm" placeholder="مثال: أحمد محمد العلي" required>
+      <label for="ph">رقم الجوال</label>
+      <input type="tel" id="ph" inputmode="numeric" placeholder="05xxxxxxxx" maxlength="10" required>
+      <div class="err" id="er"></div>
+      <button class="btn" style="width:100%;margin-top:6px" type="submit">دخول المنصة</button>
+      <p class="hint" style="margin-top:12px">للتواصل مع المعلم: <a href="tel:${TEACHER_PHONE}" style="color:var(--teal);font-weight:700"><bdi dir="ltr">${TEACHER_PHONE}</bdi></a></p>
+    </form>
+  </div>`;
+  $('#lf').onsubmit=ev=>{ev.preventDefault();
+    const name=$('#nm').value.trim().replace(/\s+/g,' '),ph=toEn($('#ph').value).replace(/\D/g,'');
+    const er=$('#er');
+    if(name.split(' ').length<3){er.textContent='يرجى كتابة الاسم الثلاثي (ثلاث كلمات على الأقل).';return}
+    if(!/^05\d{8}$/.test(ph)){er.textContent='رقم الجوال غير صحيح، اكتبه بصيغة 05xxxxxxxx (10 أرقام).';return}
+    const u=db.users[ph]||(db.users[ph]={phone:ph,results:[]});u.name=name;db.cur=ph;save();viewHome()}}
+
+/* ============ الصفحة الرئيسية ============ */
+function bestOf(u,secId,mode){const r=u.results.filter(x=>x.sec===secId&&x.mode===mode);return r.length?Math.max(...r.map(x=>x.pct)):null}
+function medalSvg(sz=22){return`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2l3 6h4l3-6" fill="none" stroke="#c0392b" stroke-width="2"/><circle cx="12" cy="15" r="6.5" fill="#f5b81c" stroke="#b97800" stroke-width="1.5"/><path d="M12 11.5l1.1 2.3 2.5.3-1.8 1.7.5 2.5-2.3-1.3-2.3 1.3.5-2.5-1.8-1.7 2.5-.3z" fill="#fff6dd"/></svg>`}
+function pillFor(u,id,mode,label){const b=bestOf(u,id,mode);
+  return b===null?`<span class="pill">${label}: لم يُجرَ</span>`:`<span class="pill ${b>=80?'good':''}">${label}: ${b}%${b>=80?' · وسام':''}</span>`}
+function viewHome(){
+  clearInterval(tick);S=null;const u=user();if(!u)return viewLogin();
+  const R=u.results,pts=R.reduce((a,r)=>a+r.pts,0),avg=R.length?Math.round(R.reduce((a,r)=>a+r.pct,0)/R.length):0;
+  const medals=SECTIONS.reduce((a,s)=>a+(['train','quiz','final'].some(m=>{const b=bestOf(u,s.id,m);return b!==null&&b>=80})?1:0),0);
+  const card=s=>{
+    const tl=s.train.length,hasQ=s.id!=='final';
+    if(s.id==='final')return'';
+    return`<div class="card scard" style="--c:${s.color}">
+      <div class="num">${s.n}</div>
+      <h3>${s.n===10?'القسم العاشر — '+esc(s.title):'القسم '+['','الأول','الثاني','الثالث','الرابع','الخامس','السادس','السابع','الثامن','التاسع'][s.n]+': '+esc(s.title)}</h3>
+      <div class="meta">${tl} سؤالاً تدريبياً · اختبار قسم من 10 أسئلة</div>
+      <div class="best">${pillFor(u,s.id,'train','التدريب')}${pillFor(u,s.id,'quiz','الاختبار')}</div>
+      <div class="row"><button class="btn sm" data-a="open" data-s="${s.id}" data-m="train">ابدأ التدريب</button>
+      <button class="btn sm amber" data-a="open" data-s="${s.id}" data-m="quiz">اختبار القسم</button></div></div>`};
+  const f=SEC('final');
+  $('#app').innerHTML=`
+  <div class="top"><div class="brand">${logo()}<div><b>${PLATFORM}</b><small>إعداد ${TEACHER_TITLE} ${TEACHER} — ${SCHOOL}</small></div></div>
+    <span class="chip">${esc(u.name)}</span><button class="btn sm sec" data-a="logout">خروج</button></div>
+  <div class="stats">
+    <div class="card stat"><b>${R.length}</b><span>محاولة منجزة</span></div>
+    <div class="card stat"><b>${avg}%</b><span>متوسط النتائج</span></div>
+    <div class="card stat"><b>${pts}</b><span>مجموع النقاط</span></div>
+    <div class="card stat"><b>${medals}</b><span>أوسمة (80% فأكثر)</span></div>
+  </div>
+  <div class="grid">${SECTIONS.map(card).join('')}</div>
+  <div class="card final">
+    <div class="grow"><h3>الاختبار النهائي — نمط التحصيلي</h3><p>${f.train.length} سؤالاً من الأقسام جميعها · زمن الاختبار 60 دقيقة · التصحيح بعد التسليم</p>
+    <div class="best" style="margin:8px 0 0">${pillFor(u,'final','final','أفضل نتيجة')}</div></div>
+    <button class="btn amber" data-a="open" data-s="final" data-m="final">ابدأ الاختبار النهائي</button></div>
+  <div class="foot"><button class="btn sec sm" data-a="report">إرسال التقرير العام للمعلم</button>
+    <button class="btn sec sm" data-a="reset">مسح نتائجي</button></div>
+  <div class="credit">للتواصل مع المعلم: <a href="tel:${TEACHER_PHONE}"><bdi dir="ltr">${TEACHER_PHONE}</bdi></a> · ${TEACHER_TITLE} ${TEACHER}</div>`}
+function logo(){return`<svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#f59e0b"/><path d="M7 32C14 32 17 29 21 22S28 8 34 8" fill="none" stroke="#10264a" stroke-width="3.2" stroke-linecap="round"/><circle cx="34" cy="8" r="3.4" fill="#10264a"/></svg>`}
+
+/* نافذة بدء الاختبار */
+function openStart(secId,mode){
+  const s=SEC(secId),n=mode==='train'?s.train.length:mode==='final'?s.train.length:10;
+  const kind=mode==='train'?'تدريب':mode==='quiz'?'اختبار القسم':'الاختبار النهائي';
+  const info=mode==='train'?['تصحيح فوري بعد كل سؤال مع تفسير','نقاط حسب سرعة الإجابة (حتى 20 نقطة للسؤال)','يمكنك التدريب مرات غير محدودة']
+    :['التصحيح والمراجعة بعد التسليم','الزمن: '+(mode==='quiz'?'10 دقائق':'60 دقيقة')+' ويُسلَّم الاختبار تلقائياً عند انتهائه','لكل إجابة صحيحة 10 نقاط · وسام عند 80% · شهادة عند 60%'];
+  const o=document.createElement('div');o.className='ov';o.id='ov';
+  o.innerHTML=`<div class="modal"><h3>${kind}: ${esc(s.short)}</h3><p style="margin:0;color:var(--ink2)">${n} سؤالاً</p><ul>${info.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <label class="chk"><input type="checkbox" id="rnd"${mode!=='train'?' checked':''}> ترتيب عشوائي للأسئلة</label>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn sec sm" data-a="closeov">إلغاء</button><button class="btn" data-a="go" data-s="${secId}" data-m="${mode}">ابدأ الآن</button></div></div>`;
+  document.body.appendChild(o)}
+
+/* ============ شاشة السؤال ============ */
+function renderQ(animate){
+  const q=S.qs[S.i],tr=S.mode==='train',n=S.qs.length,a=S.ans[S.i],answered=a!==undefined;
+  const label=S.mode==='train'?'تدريب':S.mode==='quiz'?'اختبار القسم':'الاختبار النهائي';
+  const left=S.limit?S.limit-(Date.now()-S.t0)/1000:0;
+  const opts=q.o.map((t,i)=>{let cls='opt';
+    if(tr&&answered){cls+=' lock';if(i===q.c)cls+=' ok';else if(i===a)cls+=' no'}
+    else if(!tr&&a===i)cls+=' sel';
+    return`<button class="${cls}" data-a="pick" data-i="${i}"><span class="l">${LET[i]}</span><span>${fx(t)}</span></button>`}).join('');
+  let fb='';
+  if(tr&&answered){const ok=a===q.c;fb=`<div class="fb ${ok?'ok':'no'}"><b class="h">${ok?'إجابة صحيحة ✓ +'+S.pts[S.i]+' نقطة':'إجابة غير صحيحة ✗'}</b>${ok?'':'<div>الإجابة الصحيحة: <b>'+LET[q.c]+' — '+fx(q.o[q.c])+'</b></div>'}<div>${fx(q.e)}</div></div>`}
+  let nav;
+  if(tr)nav=`<div class="nav"><button class="btn sec sm" data-a="home">الرئيسية</button><button class="btn" data-a="next" ${answered?'':'disabled'}>${S.i===n-1?'عرض النتيجة':'السؤال التالي ←'}</button></div>`;
+  else nav=`<div class="nav"><button class="btn sec" data-a="prev" ${S.i===0?'disabled':''}>→ السابق</button><button class="btn red sm" data-a="finish">إنهاء وتسليم</button><button class="btn" data-a="next" ${S.i===n-1?'disabled':''}>التالي ←</button></div>
+    <div class="dots">${S.qs.map((_,i)=>`<button class="${i===S.i?'cur':S.ans[i]!==undefined?'done':''}" data-a="go2" data-i="${i}">${i+1}</button>`).join('')}</div>`;
+  const pts=S.pts.reduce((x,y)=>x+(y||0),0);
+  $('#app').innerHTML=`
+  <div class="top"><div class="brand">${logo()}<div><b>${esc(S.sec.title)}</b><small>${label}</small></div></div>
+    <span class="chip">${esc(user().name)}</span>${S.limit?`<span class="timer${left<=60?' low':''}" id="timer">${mmss(left)}</span>`:`<span class="chip">النقاط: ${pts}</span>`}</div>
+  <div class="prog" style="--c:${S.sec.color}"><i style="width:${(S.i+(tr&&answered?1:0))/n*100}%"></i></div>
+  <div class="card qcard${animate?' in':''}" style="--c:${S.sec.color}">
+    <span class="qn">سؤال ${S.i+1} من ${n}</span>
+    <div class="qt">${fx(q.q)}</div>
+    ${q.g?`<div class="fig">${drawGraph(q.g)}</div>`:''}
+    <div class="opts">${opts}</div>${fb}${nav}</div>`;
+  if(tr&&!answered)S.qs0=Date.now()}
+
+function pick(i){
+  const q=S.qs[S.i];
+  if(S.mode==='train'){
+    if(S.ans[S.i]!==undefined)return;
+    S.ans[S.i]=i;const sec=(Date.now()-S.qs0)/1000;
+    S.pts[S.i]=i===q.c?10+Math.max(0,10-Math.floor(sec/3)):0;
+  }else S.ans[S.i]=i;
+  renderQ(false)}
+
+/* ============ إنهاء الجلسة والنتيجة ============ */
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;clearInterval(tick);
+  const n=S.qs.length;let score=0;
+  S.qs.forEach((q,i)=>{if(S.ans[i]===q.c)score++});
+  const pts=S.mode==='train'?S.pts.reduce((x,y)=>x+(y||0),0):score*10;
+  const pct=Math.round(score/n*100),secs=Math.round((Date.now()-S.t0)/1000);
+  S.res={sec:S.sec.id,title:S.sec.short,mode:S.mode,score,total:n,pct,pts,secs,date:Date.now()};
+  const u=user();u.results.push(S.res);save();viewResult()}
+const kindName=m=>m==='train'?'تدريب':m==='quiz'?'اختبار قسم':'اختبار نهائي';
+function viewResult(showAll){
+  const r=S.res,C=2*Math.PI*70,col=r.pct>=80?'#15803d':r.pct>=60?'#0e7c86':r.pct>=40?'#e8590c':'#b91c1c';
+  const msg=r.pct>=90?'ممتاز! أداء رائع 🌟':r.pct>=80?'أحسنت! مستوى متميز':r.pct>=60?'جيد — واصل التدريب لتتقدم أكثر':r.pct>=40?'مقبول — راجع التفسيرات وأعد المحاولة':'تحتاج إلى مراجعة الدرس ثم إعادة المحاولة';
+  const rev=S.qs.map((q,i)=>{const a=S.ans[i],ok=a===q.c,sk=a===undefined;
+    if(!showAll&&showAll!==undefined&&ok)return'';
+    return`<div class="card rvi ${ok?'ok':'no'}"><div class="q"><span class="tag2 ${ok?'ok':sk?'sk':'no'}">${ok?'صحيحة':sk?'بلا إجابة':'خاطئة'}</span>${i+1}. ${fx(q.q)}</div>
+    ${q.g?`<div class="fig">${drawGraph(q.g)}</div>`:''}
+    <div class="ans">${sk?'لم تُجب عن هذا السؤال.':'إجابتك: <b>'+LET[a]+' — '+fx(q.o[a])+'</b>'}</div>
+    ${ok?'':'<div class="ans">الإجابة الصحيحة: <b style="color:var(--ok)">'+LET[q.c]+' — '+fx(q.o[q.c])+'</b></div>'}
+    <div class="ex">${fx(q.e)}</div></div>`}).join('');
+  $('#app').innerHTML=`
+  <div class="top"><div class="brand">${logo()}<div><b>${esc(S.sec.title)}</b><small>نتيجة ${kindName(r.mode)}</small></div></div><span class="chip">${esc(user().name)}</span></div>
+  <div class="card res">
+    <div class="ring"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="70" fill="none" stroke="#ece7d4" stroke-width="16"/><circle cx="85" cy="85" r="70" fill="none" stroke="${col}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-r.pct/100)}"/></svg>
+      <div class="c"><div>${r.pct}%<small>${r.score} من ${r.total}</small></div></div></div>
+    <div class="msg">${msg}</div>
+    ${r.pct>=80?`<div class="medal">${medalSvg()} وسام التميّز</div>`:''}
+    <div class="kv"><div><b>${r.score}/${r.total}</b><span>الدرجة</span></div><div><b>${r.pts}</b><span>النقاط</span></div><div><b><bdi dir="ltr">${mmss(r.secs)}</bdi></b><span>الزمن المستغرق</span></div></div>
+    <div class="actions">
+      <button class="btn amber" data-a="mail">إرسال النتيجة للمعلم</button>
+      <button class="btn sec" data-a="copy">نسخ النتيجة</button>
+      ${r.pct>=60?'<button class="btn" data-a="cert">شهادة الإنجاز</button>':''}
+      <button class="btn sec" data-a="again">إعادة المحاولة</button>
+      <button class="btn sec" data-a="home">الرئيسية</button></div>
+    ${r.pct<60?'<p class="hint" style="margin-top:10px">تُمنح شهادة الإنجاز عند تحقيق 60% فأكثر.</p>':''}
+  </div>
+  <div class="rv"><div class="qbar"><h2 class="t">مراجعة الأسئلة</h2>
+    <button class="btn sec sm" data-a="rvall">عرض الكل</button><button class="btn sec sm" data-a="rverr">الأخطاء فقط</button></div>
+    ${rev||'<div class="card" style="padding:18px;text-align:center">لا توجد أخطاء — إجاباتك كلها صحيحة 🎉</div>'}</div>`;
+  window.scrollTo(0,0)}
+
+/* ============ البريد والنسخ ============ */
+function summaryText(){
+  const u=user(),r=S.res,wrong=S.qs.map((q,i)=>S.ans[i]===q.c?null:i+1).filter(Boolean);
+  return[`نتيجة طالب — ${PLATFORM}`,`الاسم: ${u.name}`,`الجوال: ${u.phone}`,`القسم: ${S.sec.title}`,`النوع: ${kindName(r.mode)}`,
+    `الدرجة: ${r.score} من ${r.total}`,`النسبة: ${r.pct}%`,`النقاط: ${r.pts}`,`الزمن المستغرق: ${mmss(r.secs)}`,`التاريخ: ${dateAr(r.date)}`,
+    `أرقام الأسئلة الخاطئة: ${wrong.length?wrong.join('، '):'لا يوجد'}`,'','— أُرسلت من المنصة'].join('\n')}
+function openMail(subject,body){
+  let b=body;if(encodeURIComponent(b).length>1800)b=b.slice(0,600)+'\n…';
+  location.href='mailto:'+EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(b)}
+function copyText(t){
+  const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('تم نسخ النتيجة')}catch(e){toast('تعذّر النسخ')}a.remove()};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast('تم نسخ النتيجة'),fb);else fb()}
+function reportText(){
+  const u=user(),lines=[`التقرير العام — ${PLATFORM}`,`الاسم: ${u.name}`,`الجوال: ${u.phone}`,''];
+  SECTIONS.forEach(s=>{const parts=['train','quiz','final'].map(m=>{const b=bestOf(u,s.id,m);return b===null?null:kindName(m)+' '+b+'%'}).filter(Boolean);
+    if(parts.length)lines.push(`${s.short}: ${parts.join(' | ')}`)});
+  const R=u.results;lines.push('',`عدد المحاولات: ${R.length}`,`مجموع النقاط: ${R.reduce((a,r)=>a+r.pts,0)}`,`التاريخ: ${dateAr(Date.now())}`);
+  return lines.join('\n')}
+
+/* ============ الشهادة ============ */
+function showCert(){
+  const u=user(),r=S.res;
+  $('#cert').innerHTML=`<div class="certbox"><div class="certbar"><button class="btn amber" data-a="print">طباعة / حفظ PDF</button><button class="btn sec" data-a="closecert">إغلاق</button></div>
+  <div class="cpage"><div style="font-size:.95rem;letter-spacing:.5px">${SCHOOL}</div>
+    <h1>شهادة إنجاز</h1><p>تشهد منصة التحصيلي التفاعلية في الفيزياء بأن الطالب</p>
+    <div><span class="nm">${esc(u.name)}</span></div>
+    <p>قد أتمّ بنجاح <b>${kindName(r.mode)}</b> في <b>${esc(S.sec.title)}</b></p>
+    <p>وحقّق درجة <b>${r.score} من ${r.total}</b> بنسبة <b>${r.pct}%</b>${r.pct>=80?' — بتقدير <b>متميّز</b>':r.pct>=60?' — بتقدير <b>جيّد</b>':''}</p>
+    <p style="font-size:.95rem;color:#6b5a2c">التاريخ: ${dateAr(r.date)}</p>
+    <div class="sig"><div>${TEACHER_TITLE}<br><b>${TEACHER}</b></div><div>${r.pct>=80?medalSvg(34):''}</div></div></div></div>`;
+  $('#cert').className='show'}
+
+/* ============ توزيع الأحداث ============ */
+const A={
+  open:d=>openStart(d.s,d.m),
+  closeov:()=>{const o=$('#ov');o&&o.remove()},
+  go:d=>{const r=$('#rnd')?$('#rnd').checked:false;A.closeov();start(d.s,d.m,r)},
+  pick:d=>pick(+d.i),
+  next:()=>{if(S.mode==='train'&&S.i===S.qs.length-1){finish();return}if(S.i<S.qs.length-1){S.i++;renderQ(true)}},
+  prev:()=>{if(S.i>0){S.i--;renderQ(true)}},
+  go2:d=>{S.i=+d.i;renderQ(true)},
+  finish:()=>{const un=S.qs.length-S.ans.filter(x=>x!==undefined).length;
+    if(un>0&&!confirm('لديك '+un+' سؤالاً بلا إجابة. هل تريد التسليم؟'))return;
+    if(un===0&&!confirm('هل تريد تسليم الاختبار الآن؟'))return;finish()},
+  home:()=>{if(S&&!S.done&&!confirm('سيتم الخروج دون حفظ هذه المحاولة. هل تريد المتابعة؟'))return;viewHome()},
+  logout:()=>{db.cur=null;save();viewLogin()},
+  reset:()=>{if(confirm('هل تريد مسح جميع نتائجك المحفوظة في هذا المتصفح؟')){user().results=[];save();viewHome()}},
+  mail:()=>openMail(`نتيجة ${user().name} — ${S.sec.short} (${kindName(S.res.mode)})`,summaryText()),
+  copy:()=>copyText(summaryText()),
+  report:()=>openMail(`التقرير العام — ${user().name}`,reportText()),
+  cert:showCert,
+  print:()=>window.print(),
+  closecert:()=>{$('#cert').className='';$('#cert').innerHTML=''},
+  again:()=>openStart(S.sec.id,S.mode),
+  rvall:()=>viewResultKeep(true),
+  rverr:()=>viewResultKeep(false)
+};
+function viewResultKeep(all){const y=window.scrollY;viewResult(all);window.scrollTo(0,$('.rv').offsetTop-10)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;const f=A[t.dataset.a];f&&f(t.dataset)});
+document.addEventListener('keydown',e=>{
+  if(!S||S.done||document.getElementById('ov')||e.target.tagName==='INPUT')return;
+  const k=toEn(e.key);
+  if(/^[1-4]$/.test(k)){pick(+k-1)}
+  else if(e.key==='Enter'||e.key==='ArrowLeft'){const b=document.querySelector('[data-a="next"]');if(b&&!b.disabled)b.click()}
+  else if(e.key==='ArrowRight'&&S.mode!=='train'){A.prev()}});
+window.addEventListener('beforeunload',e=>{if(S&&!S.done){e.preventDefault();e.returnValue=''}});
+
+/* بدء التشغيل */
+user()?viewHome():viewLogin();
+</script>
+</body>
+</html>
